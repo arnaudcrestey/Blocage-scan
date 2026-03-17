@@ -7,37 +7,67 @@ export type Question = {
 
 export const questions: Question[] = [
   {
-    title: 'Aujourd’hui, vous vous sentez plutôt :',
+    title: "Quand vous pensez à avancer dans votre vie, vous ressentez surtout :",
     options: [
-      { label: 'Perdu', profile: 'CONFUSION' },
-      { label: 'Bloqué', profile: 'PEUR' },
-      { label: 'En contrôle', profile: 'CONTRÔLE' }
+      {
+        label: "Un flou… vous ne savez pas vraiment par où commencer",
+        profile: "CONFUSION"
+      },
+      {
+        label: "Une tension intérieure, comme un frein invisible",
+        profile: "PEUR"
+      },
+      {
+        label: "Une pression forte de devoir tout maîtriser",
+        profile: "CONTRÔLE"
+      }
     ]
   },
   {
-    title: 'Votre principale difficulté :',
+    title: "Face à une décision importante, votre réaction naturelle est :",
     options: [
-      { label: 'Manque de clarté', profile: 'CONFUSION' },
-      { label: 'Peur d’agir', profile: 'PEUR' },
-      { label: 'Trop de pression', profile: 'CONTRÔLE' }
+      {
+        label: "Analyser encore et encore sans réussir à trancher",
+        profile: "CONFUSION"
+      },
+      {
+        label: "Reporter ou éviter pour ne pas vous tromper",
+        profile: "PEUR"
+      },
+      {
+        label: "Forcer une décision rapidement pour garder le contrôle",
+        profile: "CONTRÔLE"
+      }
     ]
   },
   {
-    title: 'Face aux décisions, vous :',
+    title: "Ce qui vous épuise le plus aujourd’hui :",
     options: [
-      { label: 'Hésitez', profile: 'CONFUSION' },
-      { label: 'Évitez', profile: 'PEUR' },
-      { label: 'Forcez', profile: 'CONTRÔLE' }
+      {
+        label: "Le sentiment de ne pas avancer clairement",
+        profile: "CONFUSION"
+      },
+      {
+        label: "La peur des conséquences si vous changez",
+        profile: "PEUR"
+      },
+      {
+        label: "La pression constante que vous vous imposez",
+        profile: "CONTRÔLE"
+      }
     ]
   }
 ];
 
 export const profileDescriptions: Record<Profile, string> = {
   CONFUSION:
-    'Vous avez beaucoup de possibilités, mais un manque de clarté vous empêche d’avancer.',
-  PEUR: 'Vous savez ce que vous devez faire, mais la peur freine votre passage à l’action.',
+    "Vous avez du potentiel et des idées, mais un manque de clarté vous maintient dans l’hésitation. Votre énergie se disperse, ce qui ralentit vos décisions et votre passage à l’action.",
+
+  PEUR:
+    "Vous percevez les bons choix, mais une peur profonde vous freine. Ce n’est pas un manque de capacité, mais un mécanisme de protection qui limite votre évolution.",
+
   CONTRÔLE:
-    'Vous avancez sous tension, avec une forte pression interne qui bloque votre fluidité.'
+    "Vous avancez avec exigence et intensité, mais une pression interne forte vous empêche de lâcher prise. Ce besoin de maîtrise devient paradoxalement un frein."
 };
 
 export function computeDominantProfile(answers: Profile[]): Profile {
@@ -51,5 +81,6 @@ export function computeDominantProfile(answers: Profile[]): Profile {
     scores[profile] += 1;
   });
 
-  return (Object.entries(scores).sort((a, b) => b[1] - a[1])[0]?.[0] ?? 'CONFUSION') as Profile;
+  return (Object.entries(scores).sort((a, b) => b[1] - a[1])[0]?.[0] ??
+    "CONFUSION") as Profile;
 }
