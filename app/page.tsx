@@ -33,7 +33,7 @@ export default function HomePage() {
 
     if (step === randomizedQuestions.length - 1) {
       const dominant = computeDominantProfile(nextAnswers);
-      router.push(`/result?profile=${encodeURIComponent(dominant)}`);
+      router.push(`/analyse?profile=${encodeURIComponent(dominant)}`);
       return;
     }
 
