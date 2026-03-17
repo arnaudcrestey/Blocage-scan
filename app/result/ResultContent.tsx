@@ -2,7 +2,7 @@
 
 import { FormEvent, useMemo, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { profileDescriptions, Profile } from '@/components/quiz-data';
+import { profileDescriptions, Profile } from '../../components/quiz-data';
 
 export default function ResultContent() {
   const searchParams = useSearchParams();
