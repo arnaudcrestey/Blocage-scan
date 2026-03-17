@@ -64,7 +64,7 @@ export default function HomePage() {
             <button
               onClick={() => setStarted(true)}
               className="w-full sm:w-auto px-8 py-3 rounded-full bg-gradient-to-r from-violet-500 to-indigo-500 text-white font-semibold text-sm sm:text-base transition hover:scale-105 hover:opacity-90"
-            <button>
+          >
   Comprendre ce qui me bloque vraiment →
 </button>
           </div>
