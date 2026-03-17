@@ -64,9 +64,7 @@ export default function HomePage() {
               En 30 secondes, découvrez le mécanisme invisible qui freine réellement votre vie.
             </p>
 
-            <p className="text-xs text-indigo-200/70">
-              +12 000 personnes ont déjà fait ce test
-            </p>
+            
 
             <button
               onClick={() => setStarted(true)}
@@ -74,6 +72,10 @@ export default function HomePage() {
             >
               Comprendre ce qui me bloque vraiment →
             </button>
+
+            <p className="text-xs text-indigo-200/70">
+              ✨ +12 000 personnes ont déjà fait ce test
+            </p>
 
           </div>
         ) : (
