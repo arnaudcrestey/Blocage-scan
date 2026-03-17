@@ -4,19 +4,6 @@ import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import { computeDominantProfile, Profile, questions } from '@/components/quiz-data';
 
-export default function HomePage() {
-  const router = useRouter();
-  const [started, setStarted] = useState(false);
-  const [step, setStep] = useState(0);
-  const [answers, setAnswers] = useState<Profile[]>([]);
-
-  const progress = useMemo(() => ((step + 1) / questions.length) * 100, [step]);
-'use client';
-
-import { useRouter } from 'next/navigation';
-import { useMemo, useState } from 'react';
-import { computeDominantProfile, Profile, questions } from '@/components/quiz-data';
-
 // 👉 Fonction pour mélanger les réponses
 function shuffleArray<T>(array: T[]): T[] {
   return [...array].sort(() => Math.random() - 0.5);
