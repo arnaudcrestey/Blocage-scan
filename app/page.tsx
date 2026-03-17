@@ -26,49 +26,76 @@ export default function HomePage() {
   };
 
   return (
-    <main className="relative flex min-h-screen items-center justify-center px-4 py-12">
-      <div className="glow left-8 top-10" />
-      <div className="glow bottom-10 right-8" />
+    <main className="relative flex min-h-screen items-center justify-center px-4 py-10">
 
-      <section className="glass-card w-full max-w-md rounded-3xl p-6 text-center sm:p-8">
+      {/* Background halos */}
+      <div className="absolute -left-24 -top-24 h-96 w-96 rounded-full bg-violet-500/30 blur-3xl" />
+      <div className="absolute right-0 bottom-0 h-[500px] w-[500px] rounded-full bg-indigo-500/30 blur-3xl" />
+
+      {/* Card */}
+      <section className="relative z-10 w-full max-w-2xl lg:max-w-3xl xl:max-w-4xl rounded-3xl bg-white/10 backdrop-blur-xl border border-white/20 p-6 sm:p-10 text-center shadow-2xl">
+
         {!started ? (
           <div className="space-y-6">
-            <h1 className="text-3xl font-semibold leading-tight">
-              Qu’est-ce qui vous bloque vraiment ?
-            </h1>
-            <p className="text-base text-indigo-100/90">
-              En 30 secondes, identifiez le blocage principal qui freine votre vie.
+
+            {/* Badge */}
+            <p className="inline-block rounded-full border border-white/20 px-4 py-1 text-xs uppercase tracking-widest text-indigo-200">
+              Diagnostic rapide
             </p>
+
+            {/* Title */}
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-semibold leading-tight">
+              Ce qui vous bloque aujourd’hui
+              <br className="hidden sm:block" />
+              n’est probablement pas ce que vous pensez…
+            </h1>
+
+            {/* Subtitle */}
+            <p className="text-sm sm:text-base lg:text-lg text-indigo-100/90 max-w-xl mx-auto">
+              En 30 secondes, découvrez le mécanisme invisible qui freine réellement votre vie.
+            </p>
+
+            {/* Social proof */}
+            <p className="text-xs text-indigo-200/70">
+              +12 000 personnes ont déjà fait ce test
+            </p>
+
+            {/* CTA */}
             <button
               onClick={() => setStarted(true)}
-              className="w-full rounded-full bg-violet-500 px-5 py-3 text-base font-semibold transition hover:bg-violet-400"
+              className="w-full sm:w-auto px-8 py-3 rounded-full bg-gradient-to-r from-violet-500 to-indigo-500 text-white font-semibold text-sm sm:text-base transition hover:scale-105 hover:opacity-90"
             >
-              Commencer
+              Découvrir mon blocage
             </button>
           </div>
         ) : (
-          <div className="space-y-5">
-            <div className="h-2 overflow-hidden rounded-full bg-white/15">
+          <div className="space-y-6">
+
+            {/* Progress bar */}
+            <div className="h-2 overflow-hidden rounded-full bg-white/10">
               <div
-                className="h-full rounded-full bg-violet-400 transition-all duration-300"
+                className="h-full rounded-full bg-gradient-to-r from-violet-400 to-indigo-400 transition-all duration-300"
                 style={{ width: `${progress}%` }}
               />
             </div>
 
-            <p className="text-xs uppercase tracking-[0.2em] text-indigo-100/70">
+            {/* Step */}
+            <p className="text-xs uppercase tracking-widest text-indigo-200/70">
               Question {step + 1} / {questions.length}
             </p>
 
-            <div className="min-h-24 transition-opacity duration-300">
-              <h2 className="text-xl font-medium leading-relaxed">{questions[step].title}</h2>
-            </div>
+            {/* Question */}
+            <h2 className="text-lg sm:text-xl lg:text-2xl font-medium leading-relaxed min-h-[60px]">
+              {questions[step].title}
+            </h2>
 
+            {/* Answers */}
             <div className="space-y-3 text-left">
               {questions[step].options.map((option) => (
                 <button
                   key={option.label}
                   onClick={() => handleAnswer(option.profile)}
-                  className="w-full rounded-2xl border border-white/20 bg-white/5 px-4 py-3 text-sm font-medium transition hover:border-violet-300 hover:bg-violet-500/20"
+                  className="w-full rounded-2xl border border-white/20 bg-white/5 px-4 py-4 text-sm sm:text-base font-medium transition hover:border-violet-300 hover:bg-violet-500/20"
                 >
                   {option.label}
                 </button>
@@ -76,6 +103,7 @@ export default function HomePage() {
             </div>
           </div>
         )}
+
       </section>
     </main>
   );
