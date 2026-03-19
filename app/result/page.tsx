@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import {
   profileDescriptions,
@@ -13,7 +13,7 @@ import RadarBlockage from "@/components/RadarBlockage";
 
 export const dynamic = "force-dynamic";
 
-export default function ResultPage() {
+function ResultContent() {
   const searchParams = useSearchParams();
 
   const answersParam = searchParams.get("answers") || "";
@@ -276,5 +276,22 @@ export default function ResultPage() {
         </div>
       </section>
     </main>
+  );
+}
+
+export default function ResultPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 py-12 text-white">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,#16185f_0%,#25156f_35%,#48289d_100%)]" />
+          <div className="relative z-10 rounded-3xl border border-white/20 bg-white/10 px-8 py-10 backdrop-blur-xl">
+            Chargement du résultat...
+          </div>
+        </main>
+      }
+    >
+      <ResultContent />
+    </Suspense>
   );
 }
