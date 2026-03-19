@@ -237,8 +237,8 @@ function ResultContent() {
           </p>
 
           <p className="mt-3 text-xs text-indigo-200/60">
-            🎁 Recevez gratuitement votre lecture personnalisée complète
-          </p>
+  🎁 Recevez <span className="font-semibold text-cyan-300">gratuitement</span> votre lecture personnalisée complète
+</p>
 
           <form onSubmit={handleSubmit} className="mx-auto mt-6 max-w-md space-y-4">
             <input
@@ -259,67 +259,78 @@ function ResultContent() {
             />
 
             <div className="space-y-2 text-left">
-              <p className="text-xs uppercase tracking-[0.18em] text-indigo-200/65">
-                Date de naissance
-              </p>
+  <p className="text-xs uppercase tracking-[0.18em] text-indigo-200/65">
+    Date de naissance
+  </p>
 
-              <div className="grid grid-cols-3 gap-2">
-                <input
-                  value={birthDay}
-                  onChange={(e) =>
-                    setBirthDay(e.target.value.replace(/\D/g, "").slice(0, 2))
-                  }
-                  placeholder="JJ"
-                  required
-                  className="rounded-xl border border-white/20 bg-white/10 px-3 py-3 text-sm text-white placeholder:text-indigo-200/50 outline-none md:placeholder:text-indigo-200/50"
-                />
-                <input
-                  value={birthMonth}
-                  onChange={(e) =>
-                    setBirthMonth(e.target.value.replace(/\D/g, "").slice(0, 2))
-                  }
-                  placeholder="MM"
-                  required
-                  className="rounded-xl border border-white/20 bg-white/10 px-3 py-3 text-sm text-white placeholder:text-indigo-200/50 outline-none md:placeholder:text-indigo-200/50"
-                />
-                <input
-                  value={birthYear}
-                  onChange={(e) =>
-                    setBirthYear(e.target.value.replace(/\D/g, "").slice(0, 4))
-                  }
-                  placeholder="AA"
-                  required
-                  className="rounded-xl border border-white/20 bg-white/10 px-3 py-3 text-sm text-white placeholder:text-indigo-200/50 outline-none md:placeholder:text-indigo-200/50"
-                />
-              </div>
-            </div>
+  <div className="grid grid-cols-3 gap-2">
+    <input
+      value={birthDay}
+      onChange={(e) =>
+        setBirthDay(e.target.value.replace(/\D/g, "").slice(0, 2))
+      }
+      placeholder="JJ"
+      required
+      className="rounded-xl border border-white/20 bg-white/10 px-3 py-3 text-sm text-white placeholder:text-indigo-200/50 outline-none md:placeholder:text-transparent"
+    />
+    <input
+      value={birthMonth}
+      onChange={(e) =>
+        setBirthMonth(e.target.value.replace(/\D/g, "").slice(0, 2))
+      }
+      placeholder="MM"
+      required
+      className="rounded-xl border border-white/20 bg-white/10 px-3 py-3 text-sm text-white placeholder:text-indigo-200/50 outline-none md:placeholder:text-transparent"
+    />
+    <input
+      value={birthYear}
+      onChange={(e) =>
+        setBirthYear(e.target.value.replace(/\D/g, "").slice(0, 4))
+      }
+      placeholder="AA"
+      required
+      className="rounded-xl border border-white/20 bg-white/10 px-3 py-3 text-sm text-white placeholder:text-indigo-200/50 outline-none md:placeholder:text-transparent"
+    />
+  </div>
 
-            <div className="space-y-2 text-left">
-              <p className="text-xs uppercase tracking-[0.18em] text-indigo-200/65">
-                Heure de naissance
-              </p>
+  <div className="hidden grid-cols-3 gap-2 md:grid">
+    <p className="text-xs text-indigo-200/55">Jour</p>
+    <p className="text-xs text-indigo-200/55">Mois</p>
+    <p className="text-xs text-indigo-200/55">Année</p>
+  </div>
+</div>
 
-              <div className="grid grid-cols-2 gap-2">
-                <input
-                  value={birthHour}
-                  onChange={(e) =>
-                    setBirthHour(e.target.value.replace(/\D/g, "").slice(0, 2))
-                  }
-                  placeholder="HH"
-                  required
-                  className="rounded-xl border border-white/20 bg-white/10 px-3 py-3 text-sm text-white placeholder:text-indigo-200/50 outline-none"
-                />
-                <input
-                  value={birthMinute}
-                  onChange={(e) =>
-                    setBirthMinute(e.target.value.replace(/\D/g, "").slice(0, 2))
-                  }
-                  placeholder="MM"
-                  required
-                  className="rounded-xl border border-white/20 bg-white/10 px-3 py-3 text-sm text-white placeholder:text-indigo-200/50 outline-none"
-                />
-              </div>
-            </div>
+<div className="space-y-2 text-left">
+  <p className="text-xs uppercase tracking-[0.18em] text-indigo-200/65">
+    Heure de naissance
+  </p>
+
+  <div className="grid grid-cols-2 gap-2">
+    <input
+      value={birthHour}
+      onChange={(e) =>
+        setBirthHour(e.target.value.replace(/\D/g, "").slice(0, 2))
+      }
+      placeholder="Heure"
+      required
+      className="rounded-xl border border-white/20 bg-white/10 px-3 py-3 text-sm text-white placeholder:text-indigo-200/50 outline-none md:placeholder:text-transparent"
+    />
+    <input
+      value={birthMinute}
+      onChange={(e) =>
+        setBirthMinute(e.target.value.replace(/\D/g, "").slice(0, 2))
+      }
+      placeholder="Minute"
+      required
+      className="rounded-xl border border-white/20 bg-white/10 px-3 py-3 text-sm text-white placeholder:text-indigo-200/50 outline-none md:placeholder:text-transparent"
+    />
+  </div>
+
+  <div className="hidden grid-cols-2 gap-2 md:grid">
+    <p className="text-xs text-indigo-200/55">Heure</p>
+    <p className="text-xs text-indigo-200/55">Minute</p>
+  </div>
+</div>
 
             <button
               type="submit"
