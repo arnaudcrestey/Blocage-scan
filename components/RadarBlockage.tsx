@@ -15,20 +15,25 @@ type Props = {
 
 export default function RadarBlockage({ data }: Props) {
   return (
-    <div className="h-[260px] w-full">
+    <div className="h-[280px] w-full sm:h-[320px]">
       <ResponsiveContainer width="100%" height="100%">
-        <RadarChart data={data}>
-          <PolarGrid stroke="rgba(255,255,255,0.15)" />
+        <RadarChart outerRadius="68%" data={data}>
+          <PolarGrid stroke="rgba(255,255,255,0.18)" />
           <PolarAngleAxis
             dataKey="subject"
-            tick={{ fill: "rgba(255,255,255,0.75)", fontSize: 12 }}
+            tick={{ fill: "rgba(255,255,255,0.82)", fontSize: 12 }}
           />
-          <PolarRadiusAxis domain={[0, 9]} tick={false} axisLine={false} />
+          <PolarRadiusAxis
+            domain={[0, 15]}
+            tick={false}
+            axisLine={false}
+          />
           <Radar
             dataKey="value"
-            stroke="#7dd3fc"
-            fill="#8b5cf6"
-            fillOpacity={0.45}
+            stroke="#67e8f9"
+            fill="#7c3aed"
+            fillOpacity={0.5}
+            strokeWidth={2}
           />
         </RadarChart>
       </ResponsiveContainer>
