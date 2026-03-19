@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Suspense, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import {
@@ -83,6 +84,7 @@ function ResultContent() {
 
   const [sending, setSending] = useState(false);
   const [message, setMessage] = useState("");
+  const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
     const runAnalysis = async () => {
@@ -162,6 +164,8 @@ function ResultContent() {
       }
 
       setMessage("Votre demande a bien été envoyée.");
+      setSubmitted(true);
+
       setFirstName("");
       setEmail("");
       setBirthDay("");
@@ -175,6 +179,44 @@ function ResultContent() {
     } finally {
       setSending(false);
     }
+  }
+
+  if (submitted) {
+    return (
+      <main className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 py-8 text-white sm:py-12">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,#16185f_0%,#25156f_35%,#48289d_100%)]" />
+        <div className="absolute -left-24 -top-24 h-96 w-96 rounded-full bg-violet-500/30 blur-3xl" />
+        <div className="absolute bottom-0 right-0 h-[500px] w-[500px] rounded-full bg-indigo-500/30 blur-3xl" />
+
+        <section className="relative z-10 w-full max-w-2xl rounded-3xl border border-white/20 bg-white/10 p-8 text-center shadow-2xl backdrop-blur-xl sm:p-12">
+          <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full border border-white/20 bg-white/10 text-3xl">
+            ✓
+          </div>
+
+          <h1 className="text-3xl font-semibold sm:text-4xl">
+            Demande envoyée
+          </h1>
+
+          <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-indigo-100/85 sm:text-lg">
+            Votre première lecture personnalisée vous sera envoyée par email
+            dans quelques instants.
+          </p>
+
+          <p className="mt-4 text-sm text-indigo-200/70">
+            Pensez à vérifier vos spams si vous ne voyez rien apparaître.
+          </p>
+
+          <div className="mt-8">
+            <Link
+              href="/"
+              className="inline-flex rounded-2xl bg-gradient-to-r from-cyan-400 to-violet-500 px-6 py-3 text-sm font-semibold text-white transition hover:opacity-90"
+            >
+              Retour à l’accueil
+            </Link>
+          </div>
+        </section>
+      </main>
+    );
   }
 
   return (
@@ -237,8 +279,10 @@ function ResultContent() {
           </p>
 
           <p className="mt-3 text-xs text-indigo-200/60">
-  🎁 Recevez <span className="font-semibold text-cyan-300">gratuitement</span> votre lecture personnalisée complète
-</p>
+            🎁 Recevez{" "}
+            <span className="font-semibold text-cyan-300">gratuitement</span>{" "}
+            votre lecture personnalisée complète
+          </p>
 
           <form onSubmit={handleSubmit} className="mx-auto mt-6 max-w-md space-y-4">
             <input
@@ -259,78 +303,78 @@ function ResultContent() {
             />
 
             <div className="space-y-2 text-left">
-  <p className="text-xs uppercase tracking-[0.18em] text-indigo-200/65">
-    Date de naissance
-  </p>
+              <p className="text-xs uppercase tracking-[0.18em] text-indigo-200/65">
+                Date de naissance
+              </p>
 
-  <div className="grid grid-cols-3 gap-2">
-    <input
-      value={birthDay}
-      onChange={(e) =>
-        setBirthDay(e.target.value.replace(/\D/g, "").slice(0, 2))
-      }
-      placeholder="JJ"
-      required
-      className="rounded-xl border border-white/20 bg-white/10 px-3 py-3 text-sm text-white placeholder:text-indigo-200/50 outline-none md:placeholder:text-transparent"
-    />
-    <input
-      value={birthMonth}
-      onChange={(e) =>
-        setBirthMonth(e.target.value.replace(/\D/g, "").slice(0, 2))
-      }
-      placeholder="MM"
-      required
-      className="rounded-xl border border-white/20 bg-white/10 px-3 py-3 text-sm text-white placeholder:text-indigo-200/50 outline-none md:placeholder:text-transparent"
-    />
-    <input
-      value={birthYear}
-      onChange={(e) =>
-        setBirthYear(e.target.value.replace(/\D/g, "").slice(0, 4))
-      }
-      placeholder="AA"
-      required
-      className="rounded-xl border border-white/20 bg-white/10 px-3 py-3 text-sm text-white placeholder:text-indigo-200/50 outline-none md:placeholder:text-transparent"
-    />
-  </div>
+              <div className="grid grid-cols-3 gap-2">
+                <input
+                  value={birthDay}
+                  onChange={(e) =>
+                    setBirthDay(e.target.value.replace(/\D/g, "").slice(0, 2))
+                  }
+                  placeholder="JJ"
+                  required
+                  className="rounded-xl border border-white/20 bg-white/10 px-3 py-3 text-sm text-white placeholder:text-indigo-200/50 outline-none md:placeholder:text-transparent"
+                />
+                <input
+                  value={birthMonth}
+                  onChange={(e) =>
+                    setBirthMonth(e.target.value.replace(/\D/g, "").slice(0, 2))
+                  }
+                  placeholder="MM"
+                  required
+                  className="rounded-xl border border-white/20 bg-white/10 px-3 py-3 text-sm text-white placeholder:text-indigo-200/50 outline-none md:placeholder:text-transparent"
+                />
+                <input
+                  value={birthYear}
+                  onChange={(e) =>
+                    setBirthYear(e.target.value.replace(/\D/g, "").slice(0, 4))
+                  }
+                  placeholder="AA"
+                  required
+                  className="rounded-xl border border-white/20 bg-white/10 px-3 py-3 text-sm text-white placeholder:text-indigo-200/50 outline-none md:placeholder:text-transparent"
+                />
+              </div>
 
-  <div className="hidden grid-cols-3 gap-2 md:grid">
-    <p className="text-xs text-indigo-200/55">Jour</p>
-    <p className="text-xs text-indigo-200/55">Mois</p>
-    <p className="text-xs text-indigo-200/55">Année</p>
-  </div>
-</div>
+              <div className="hidden grid-cols-3 gap-2 md:grid">
+                <p className="text-xs text-indigo-200/55">Jour</p>
+                <p className="text-xs text-indigo-200/55">Mois</p>
+                <p className="text-xs text-indigo-200/55">Année</p>
+              </div>
+            </div>
 
-<div className="space-y-2 text-left">
-  <p className="text-xs uppercase tracking-[0.18em] text-indigo-200/65">
-    Heure de naissance
-  </p>
+            <div className="space-y-2 text-left">
+              <p className="text-xs uppercase tracking-[0.18em] text-indigo-200/65">
+                Heure de naissance
+              </p>
 
-  <div className="grid grid-cols-2 gap-2">
-    <input
-      value={birthHour}
-      onChange={(e) =>
-        setBirthHour(e.target.value.replace(/\D/g, "").slice(0, 2))
-      }
-      placeholder="Heure"
-      required
-      className="rounded-xl border border-white/20 bg-white/10 px-3 py-3 text-sm text-white placeholder:text-indigo-200/50 outline-none md:placeholder:text-transparent"
-    />
-    <input
-      value={birthMinute}
-      onChange={(e) =>
-        setBirthMinute(e.target.value.replace(/\D/g, "").slice(0, 2))
-      }
-      placeholder="Minute"
-      required
-      className="rounded-xl border border-white/20 bg-white/10 px-3 py-3 text-sm text-white placeholder:text-indigo-200/50 outline-none md:placeholder:text-transparent"
-    />
-  </div>
+              <div className="grid grid-cols-2 gap-2">
+                <input
+                  value={birthHour}
+                  onChange={(e) =>
+                    setBirthHour(e.target.value.replace(/\D/g, "").slice(0, 2))
+                  }
+                  placeholder="Heure"
+                  required
+                  className="rounded-xl border border-white/20 bg-white/10 px-3 py-3 text-sm text-white placeholder:text-indigo-200/50 outline-none md:placeholder:text-transparent"
+                />
+                <input
+                  value={birthMinute}
+                  onChange={(e) =>
+                    setBirthMinute(e.target.value.replace(/\D/g, "").slice(0, 2))
+                  }
+                  placeholder="Minute"
+                  required
+                  className="rounded-xl border border-white/20 bg-white/10 px-3 py-3 text-sm text-white placeholder:text-indigo-200/50 outline-none md:placeholder:text-transparent"
+                />
+              </div>
 
-  <div className="hidden grid-cols-2 gap-2 md:grid">
-    <p className="text-xs text-indigo-200/55">Heure</p>
-    <p className="text-xs text-indigo-200/55">Minute</p>
-  </div>
-</div>
+              <div className="hidden grid-cols-2 gap-2 md:grid">
+                <p className="text-xs text-indigo-200/55">Heure</p>
+                <p className="text-xs text-indigo-200/55">Minute</p>
+              </div>
+            </div>
 
             <button
               type="submit"
@@ -340,7 +384,7 @@ function ResultContent() {
               {sending ? "Envoi en cours..." : "Recevoir mon analyse complète"}
             </button>
 
-            {message && (
+            {message && !submitted && (
               <p className="pt-2 text-sm text-indigo-100/80">{message}</p>
             )}
           </form>
