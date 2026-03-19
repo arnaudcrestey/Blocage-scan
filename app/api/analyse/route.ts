@@ -12,27 +12,61 @@ export async function POST(req: Request) {
     const { mode } = body;
 
     if (mode === "analysis") {
-      const { profile, description, answers } = body;
+      const { profile, description, answers, answerIndexes } = body;
 
       const prompt = `
-Tu es un expert en psychologie comportementale.
+Vous êtes un expert en psychologie comportementale, en dynamiques de blocage intérieur et en lecture des mécanismes de protection.
 
-Profil dominant détecté : ${profile}
+Votre mission est de fournir une analyse claire, crédible et utile
+à partir d’un diagnostic rapide basé sur 3 questions concernant la manière dont une personne se bloque aujourd’hui.
+
+IMPORTANT
+
+Profil dominant détecté : ${profile || "Non défini"}
 
 Description de base :
-${description}
+${description || "Non disponible"}
 
-Réponses utilisateur :
-${Array.isArray(answers) ? answers.join(", ") : "Non disponibles"}
+Réponses au diagnostic :
+${Array.isArray(answers) ? JSON.stringify(answers) : "Non disponibles"}
 
-Rédige une analyse en français, professionnelle, humaine, claire et fluide.
-Longueur : 120 à 180 mots.
-Objectif :
-- expliquer le blocage principal
-- montrer qu’il s’agit d’un mécanisme interne cohérent
-- ouvrir une perspective d’évolution
-- ton sérieux, rassurant, moderne
-- pas de langage ésotérique
+Index des réponses :
+${Array.isArray(answerIndexes) ? JSON.stringify(answerIndexes) : "Non disponibles"}
+
+RÈGLES IMPORTANTES
+
+- Adressez-vous directement à la personne en utilisant "vous".
+- Ne parlez jamais de "la personne".
+- Le texte doit rester naturel, crédible et facile à lire.
+- Maximum : 90 à 130 mots.
+- Évitez un ton moralisateur, trop clinique ou ésotérique.
+- Le texte doit être fluide, moderne, rassurant et professionnel.
+
+OBJECTIF
+
+Aider l’utilisateur à comprendre rapidement :
+
+- son blocage principal actuel
+- la logique interne de ce blocage
+- ce qui freine aujourd’hui son passage à l’action ou sa clarté
+
+STRUCTURE OBLIGATOIRE
+
+Analyse
+
+Rédigez un court paragraphe expliquant ce que signifie ce profil de blocage aujourd’hui.
+
+Expliquez que ce blocage n’est pas un hasard et qu’il peut être lié notamment à :
+
+- la personnalité
+- l’histoire émotionnelle
+- les mécanismes de protection
+- les besoins de sécurité ou de maîtrise
+
+Terminez par une phrase ouvrant sur une exploration plus approfondie.
+
+Mentionnez naturellement que le Cabinet Astrae propose une analyse plus complète
+pour explorer ces mécanismes en profondeur, notamment grâce à l’étude du thème astral.
 `;
 
       const completion = await openai.chat.completions.create({
@@ -43,7 +77,7 @@ Objectif :
 
       const analysis =
         completion.choices[0]?.message?.content?.trim() ||
-        "Analyse indisponible.";
+        "Votre blocage actuel semble traduire un mécanisme intérieur de protection. Le comprendre permet déjà de retrouver davantage de clarté, de recul et de mouvement. Certains freins prennent racine dans la personnalité, l’histoire émotionnelle ou le besoin de sécurité. Le Cabinet Astrae propose une analyse plus complète pour explorer ces dynamiques en profondeur, notamment à travers l’étude du thème astral.";
 
       return NextResponse.json({ analysis });
     }
@@ -55,10 +89,13 @@ Objectif :
         birthDay,
         birthMonth,
         birthYear,
+        birthHour,
+        birthMinute,
         profile,
         description,
         analysis,
         answers,
+        answerIndexes,
       } = body;
 
       const transporter = nodemailer.createTransport({
@@ -74,25 +111,31 @@ Objectif :
         to: "arnaud.crestey14@gmail.com",
         subject: `Nouveau lead Blocage Scan - ${firstName || "Sans prénom"}`,
         html: `
-          <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #111;">
-            <h2>Nouveau lead Blocage Scan</h2>
+          <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #111; max-width: 720px; margin: 0 auto;">
+            <h2 style="margin-bottom: 16px;">Nouveau lead Blocage Scan</h2>
 
             <p><strong>Prénom :</strong> ${firstName || "Non renseigné"}</p>
             <p><strong>Email :</strong> ${email || "Non renseigné"}</p>
             <p><strong>Date de naissance :</strong> ${birthDay || "--"}/${birthMonth || "--"}/${birthYear || "----"}</p>
+            <p><strong>Heure de naissance :</strong> ${birthHour || "--"}:${birthMinute || "--"}</p>
 
             <hr style="margin: 24px 0;" />
 
             <p><strong>Profil dominant :</strong> ${profile || "Non défini"}</p>
-            <p><strong>Description :</strong> ${description || "Non disponible"}</p>
-            <p><strong>Réponses :</strong> ${
+            <p><strong>Description courte :</strong> ${description || "Non disponible"}</p>
+            <p><strong>Réponses profil :</strong> ${
               Array.isArray(answers) ? answers.join(", ") : "Non disponibles"
+            }</p>
+            <p><strong>Index des réponses :</strong> ${
+              Array.isArray(answerIndexes)
+                ? answerIndexes.join(", ")
+                : "Non disponibles"
             }</p>
 
             <hr style="margin: 24px 0;" />
 
-            <h3>Analyse GPT</h3>
-            <p>${(analysis || "").replace(/\n/g, "<br/>")}</p>
+            <h3 style="margin-bottom: 8px;">Analyse GPT</h3>
+            <p>${(analysis || "Non disponible").replace(/\n/g, "<br/>")}</p>
           </div>
         `,
       });
