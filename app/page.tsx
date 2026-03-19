@@ -32,10 +32,9 @@ export default function HomePage() {
     const nextAnswers = [...answers, profile];
 
     if (step === randomizedQuestions.length - 1) {
-      const dominant = computeDominantProfile(nextAnswers);
-      router.push(`/analyse?profile=${encodeURIComponent(dominant)}`);
-      return;
-    }
+  router.push(`/result?answers=${nextAnswers.join(",")}`);
+  return;
+}
 
     setAnswers(nextAnswers);
     setStep((prev) => prev + 1);
