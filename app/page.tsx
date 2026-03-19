@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
-import { computeDominantProfile, Profile, questions } from '@/components/quiz-data';
+import { type Profile, questions } from "@/components/quiz-data";
 
 // Mélange les réponses
 function shuffleArray<T>(array: T[]): T[] {
