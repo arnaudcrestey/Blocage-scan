@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import {
   profileDescriptions,
   getProfileFromIndexes,
-  computeDominantProfile,
+  computeDominantProfileFromIndexes,
   getRadarData,
   type Profile,
 } from "@/components/quiz-data";
@@ -19,14 +19,12 @@ function ResultContent() {
   const answersParam = searchParams.get("answers") || "";
   const fallbackProfile = (searchParams.get("profile") || "CONFUSION") as Profile;
 
-  const answerIndexes = useMemo(
-    () =>
-      answersParam
-        .split(",")
-        .map((n) => Number(n))
-        .filter((n) => !Number.isNaN(n)),
-    [answersParam]
-  );
+  const answerIndexes = useMemo(() => {
+    return answersParam
+      .split(",")
+      .map((n) => Number(n))
+      .filter((n) => !Number.isNaN(n));
+  }, [answersParam]);
 
   const answerProfiles = useMemo(() => {
     if (!answerIndexes.length) return [fallbackProfile];
@@ -34,18 +32,41 @@ function ResultContent() {
   }, [answerIndexes, fallbackProfile]);
 
   const profile = useMemo(() => {
-    if (!answerProfiles.length) return fallbackProfile;
-    return computeDominantProfile(answerProfiles);
-  }, [answerProfiles, fallbackProfile]);
+    if (!answerIndexes.length) return fallbackProfile;
+    return computeDominantProfileFromIndexes(answerIndexes);
+  }, [answerIndexes, fallbackProfile]);
 
   const radarData = useMemo(() => {
     if (!answerIndexes.length) {
+      if (profile === "CONFUSION") {
+        return [
+          { subject: "Clarté", value: 10 },
+          { subject: "Sécurité", value: 4 },
+          { subject: "Maîtrise", value: 5 },
+          { subject: "Élan", value: 4 },
+          { subject: "Apaisement", value: 6 },
+        ];
+      }
+
+      if (profile === "PEUR") {
+        return [
+          { subject: "Clarté", value: 4 },
+          { subject: "Sécurité", value: 10 },
+          { subject: "Maîtrise", value: 4 },
+          { subject: "Élan", value: 3 },
+          { subject: "Apaisement", value: 4 },
+        ];
+      }
+
       return [
-        { subject: "Clarté", value: profile === "CONFUSION" ? 8 : 3 },
-        { subject: "Sécurité", value: profile === "PEUR" ? 8 : 3 },
-        { subject: "Maîtrise", value: profile === "CONTRÔLE" ? 8 : 3 },
+        { subject: "Clarté", value: 5 },
+        { subject: "Sécurité", value: 4 },
+        { subject: "Maîtrise", value: 10 },
+        { subject: "Élan", value: 7 },
+        { subject: "Apaisement", value: 3 },
       ];
     }
+
     return getRadarData(answerIndexes);
   }, [answerIndexes, profile]);
 
@@ -57,6 +78,8 @@ function ResultContent() {
   const [birthDay, setBirthDay] = useState("");
   const [birthMonth, setBirthMonth] = useState("");
   const [birthYear, setBirthYear] = useState("");
+  const [birthHour, setBirthHour] = useState("");
+  const [birthMinute, setBirthMinute] = useState("");
 
   const [sending, setSending] = useState(false);
   const [message, setMessage] = useState("");
@@ -122,6 +145,8 @@ function ResultContent() {
           birthDay,
           birthMonth,
           birthYear,
+          birthHour,
+          birthMinute,
           profile,
           description: profileDescriptions[profile],
           analysis,
@@ -142,6 +167,8 @@ function ResultContent() {
       setBirthDay("");
       setBirthMonth("");
       setBirthYear("");
+      setBirthHour("");
+      setBirthMinute("");
     } catch (error) {
       console.error(error);
       setMessage("Une erreur est survenue. Merci de réessayer.");
@@ -151,24 +178,24 @@ function ResultContent() {
   }
 
   return (
-    <main className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 py-12 text-white">
+    <main className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 py-8 text-white sm:py-12">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,#16185f_0%,#25156f_35%,#48289d_100%)]" />
       <div className="absolute -left-24 -top-24 h-96 w-96 rounded-full bg-violet-500/30 blur-3xl" />
       <div className="absolute bottom-0 right-0 h-[500px] w-[500px] rounded-full bg-indigo-500/30 blur-3xl" />
 
-      <section className="relative z-10 w-full max-w-5xl space-y-8 rounded-3xl border border-white/20 bg-white/10 p-6 shadow-2xl backdrop-blur-xl sm:p-10">
+      <section className="relative z-10 w-full max-w-5xl space-y-6 rounded-3xl border border-white/20 bg-white/10 p-4 shadow-2xl backdrop-blur-xl sm:space-y-8 sm:p-8 md:p-10">
         <div className="text-center space-y-2">
-          <p className="text-xs uppercase tracking-widest text-indigo-200/60">
+          <p className="text-[10px] uppercase tracking-[0.24em] text-indigo-200/60 sm:text-xs">
             Résultat Blocage Scan
           </p>
 
-          <h1 className="text-3xl font-semibold sm:text-4xl">
+          <h1 className="text-2xl font-semibold sm:text-4xl">
             Votre blocage principal : {profile}
           </h1>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2">
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+        <div className="grid gap-4 md:grid-cols-2 md:gap-6">
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-5 sm:p-6">
             <h2 className="mb-3 font-semibold">Diagnostic principal</h2>
 
             <p className="text-sm leading-relaxed text-indigo-100/80">
@@ -182,16 +209,16 @@ function ResultContent() {
             </ul>
           </div>
 
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-5 sm:p-6">
             <div className="text-center text-indigo-200/70">
-              <p className="mb-4 text-sm">Profil comportemental</p>
+              <p className="mb-3 text-sm">Profil comportemental</p>
             </div>
 
             <RadarBlockage data={radarData} />
           </div>
         </div>
 
-        <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+        <div className="rounded-2xl border border-white/10 bg-white/5 p-5 sm:p-6">
           <h2 className="mb-2 font-semibold">Analyse personnalisée</h2>
 
           <p className="text-sm leading-relaxed text-indigo-100/80">
@@ -199,27 +226,27 @@ function ResultContent() {
           </p>
         </div>
 
-        <div className="rounded-2xl border border-white/10 bg-white/5 p-6 text-center space-y-4">
+        <div className="rounded-2xl border border-white/10 bg-white/5 p-5 text-center sm:p-6">
           <h3 className="text-lg font-semibold">
             Comprendre réellement votre fonctionnement
           </h3>
 
-          <p className="text-sm text-indigo-200/70">
+          <p className="mt-3 text-sm text-indigo-200/70">
             Au <span className="text-cyan-300">Cabinet Astrae</span>, nous analysons en profondeur
             vos mécanismes internes pour vous aider à dépasser ce blocage.
           </p>
 
-          <p className="text-xs text-indigo-200/60">
+          <p className="mt-3 text-xs text-indigo-200/60">
             🎁 Recevez gratuitement votre lecture personnalisée complète
           </p>
 
-          <form onSubmit={handleSubmit} className="mx-auto max-w-md space-y-3">
+          <form onSubmit={handleSubmit} className="mx-auto mt-6 max-w-md space-y-4">
             <input
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
               placeholder="Votre prénom"
               required
-              className="w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-sm placeholder:text-indigo-200/50"
+              className="w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white placeholder:text-indigo-200/50 outline-none"
             />
 
             <input
@@ -228,43 +255,76 @@ function ResultContent() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Votre email"
               required
-              className="w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-sm placeholder:text-indigo-200/50"
+              className="w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white placeholder:text-indigo-200/50 outline-none"
             />
 
-            <div className="grid grid-cols-3 gap-2">
-              <input
-                value={birthDay}
-                onChange={(e) =>
-                  setBirthDay(e.target.value.replace(/\D/g, "").slice(0, 2))
-                }
-                placeholder="Jour"
-                required
-                className="rounded bg-white/10 px-3 py-2 text-sm border border-white/20"
-              />
-              <input
-                value={birthMonth}
-                onChange={(e) =>
-                  setBirthMonth(e.target.value.replace(/\D/g, "").slice(0, 2))
-                }
-                placeholder="Mois"
-                required
-                className="rounded bg-white/10 px-3 py-2 text-sm border border-white/20"
-              />
-              <input
-                value={birthYear}
-                onChange={(e) =>
-                  setBirthYear(e.target.value.replace(/\D/g, "").slice(0, 4))
-                }
-                placeholder="Année"
-                required
-                className="rounded bg-white/10 px-3 py-2 text-sm border border-white/20"
-              />
+            <div className="space-y-2 text-left">
+              <p className="text-xs uppercase tracking-[0.18em] text-indigo-200/65">
+                Date de naissance
+              </p>
+
+              <div className="grid grid-cols-3 gap-2">
+                <input
+                  value={birthDay}
+                  onChange={(e) =>
+                    setBirthDay(e.target.value.replace(/\D/g, "").slice(0, 2))
+                  }
+                  placeholder="JJ"
+                  required
+                  className="rounded-xl border border-white/20 bg-white/10 px-3 py-3 text-sm text-white placeholder:text-indigo-200/50 outline-none md:placeholder:text-indigo-200/50"
+                />
+                <input
+                  value={birthMonth}
+                  onChange={(e) =>
+                    setBirthMonth(e.target.value.replace(/\D/g, "").slice(0, 2))
+                  }
+                  placeholder="MM"
+                  required
+                  className="rounded-xl border border-white/20 bg-white/10 px-3 py-3 text-sm text-white placeholder:text-indigo-200/50 outline-none md:placeholder:text-indigo-200/50"
+                />
+                <input
+                  value={birthYear}
+                  onChange={(e) =>
+                    setBirthYear(e.target.value.replace(/\D/g, "").slice(0, 4))
+                  }
+                  placeholder="AA"
+                  required
+                  className="rounded-xl border border-white/20 bg-white/10 px-3 py-3 text-sm text-white placeholder:text-indigo-200/50 outline-none md:placeholder:text-indigo-200/50"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2 text-left">
+              <p className="text-xs uppercase tracking-[0.18em] text-indigo-200/65">
+                Heure de naissance
+              </p>
+
+              <div className="grid grid-cols-2 gap-2">
+                <input
+                  value={birthHour}
+                  onChange={(e) =>
+                    setBirthHour(e.target.value.replace(/\D/g, "").slice(0, 2))
+                  }
+                  placeholder="HH"
+                  required
+                  className="rounded-xl border border-white/20 bg-white/10 px-3 py-3 text-sm text-white placeholder:text-indigo-200/50 outline-none"
+                />
+                <input
+                  value={birthMinute}
+                  onChange={(e) =>
+                    setBirthMinute(e.target.value.replace(/\D/g, "").slice(0, 2))
+                  }
+                  placeholder="MM"
+                  required
+                  className="rounded-xl border border-white/20 bg-white/10 px-3 py-3 text-sm text-white placeholder:text-indigo-200/50 outline-none"
+                />
+              </div>
             </div>
 
             <button
               type="submit"
               disabled={sending}
-              className="w-full rounded-full bg-gradient-to-r from-cyan-400 to-violet-500 py-3 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-60"
+              className="w-full rounded-full bg-gradient-to-r from-cyan-400 to-violet-500 py-3 text-sm font-semibold text-white transition hover:opacity-90 disabled:opacity-60"
             >
               {sending ? "Envoi en cours..." : "Recevoir mon analyse complète"}
             </button>
