@@ -91,6 +91,7 @@ pour explorer ces mécanismes en profondeur, notamment grâce à l’étude du t
         birthYear,
         birthHour,
         birthMinute,
+        birthPlace,
         profile,
         description,
         analysis,
@@ -118,6 +119,7 @@ pour explorer ces mécanismes en profondeur, notamment grâce à l’étude du t
             <p><strong>Email :</strong> ${email || "Non renseigné"}</p>
             <p><strong>Date de naissance :</strong> ${birthDay || "--"}/${birthMonth || "--"}/${birthYear || "----"}</p>
             <p><strong>Heure de naissance :</strong> ${birthHour || "--"}:${birthMinute || "--"}</p>
+            <p><strong>Lieu de naissance :</strong> ${birthPlace || "Non renseigné"}</p>
 
             <hr style="margin: 24px 0;" />
 
