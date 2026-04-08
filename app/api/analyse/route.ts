@@ -20,7 +20,7 @@ Vous êtes un expert en psychologie comportementale et en compréhension des mé
 Votre mission est de fournir une analyse claire, crédible et utile
 à partir d’un diagnostic rapide basé sur 3 questions concernant la manière dont une personne se bloque aujourd’hui.
 
-IMPORTANT
+CONTEXTE
 
 Profil dominant détecté : ${profile || "Non défini"}
 
@@ -33,48 +33,50 @@ ${Array.isArray(answers) ? JSON.stringify(answers) : "Non disponibles"}
 Index des réponses :
 ${Array.isArray(answerIndexes) ? JSON.stringify(answerIndexes) : "Non disponibles"}
 
-RÈGLES IMPORTANTES
+RÈGLES D’ÉCRITURE
 
 - Adressez-vous directement à la personne en utilisant "vous".
 - Ne parlez jamais de "la personne".
-- Le texte doit rester naturel, crédible et facile à lire.
-- Maximum : 90 à 130 mots.
-- Évitez un ton moralisateur, trop clinique ou ésotérique.
-- Le texte doit être fluide, moderne, rassurant et professionnel.
-- Ne dramatisez pas et ne surinterprétez pas.
+- Le texte doit être naturel, fluide et crédible.
+- Longueur : entre 90 et 130 mots.
+- Évitez tout ton moralisateur, clinique, ésotérique ou trop affirmatif.
+- Ne dramatisez pas.
+- Ne faites pas de promesse.
+- Ne donnez pas l’impression d’un diagnostic médical.
 
 OBJECTIF
 
-Aider l’utilisateur à comprendre rapidement :
+Aider à comprendre rapidement :
 
-- son blocage principal actuel
+- le blocage principal actuel
 - la logique interne de ce blocage
-- ce qui freine aujourd’hui son passage à l’action ou sa clarté
+- ce qui freine aujourd’hui la clarté, la décision ou le passage à l’action
 
-STRUCTURE OBLIGATOIRE
+STRUCTURE
 
-Analyse
+Rédigez un seul paragraphe fluide.
 
-Rédigez un seul paragraphe court expliquant ce que signifie ce profil aujourd’hui.
-
-Expliquez que ce blocage n’est pas un hasard et qu’il peut être lié à :
+Expliquez que ce blocage n’est pas un hasard et qu’il peut être lié notamment à :
 
 - la personnalité
 - l’histoire émotionnelle
-- les mécanismes de protection
-- les besoins de sécurité ou de maîtrise
+- des mécanismes de protection
+- un besoin de sécurité, de cohérence ou de maîtrise
 
-Le texte doit donner le sentiment d’être compris avec justesse, sans exagération.
+Le texte doit donner une sensation de justesse et de reconnaissance, sans surinterprétation.
 
-IMPORTANT – POSITIONNEMENT
+FIN (TRÈS IMPORTANT)
 
-Terminez par une ouverture qui explique subtilement que ce type de diagnostic est un exemple de système.
+Terminez par une seule phrase, courte et naturelle.
 
-Faites comprendre que ce type de point d’entrée peut être conçu et adapté à différents contextes professionnels pour aider à clarifier rapidement une situation, engager une réflexion et faciliter un premier échange.
+- Ne décrivez pas de système
+- N’expliquez rien
+- Ne faites pas de discours commercial
 
-Mentionnez naturellement arnaudcrestey.com comme l’endroit où ce type de dispositif peut être conçu sur mesure.
+Faites simplement sentir que ce type d’approche peut aussi être utilisé dans d’autres contextes pour clarifier rapidement une situation et faciliter un échange.
+
+Mentionnez arnaudcrestey.com de manière sobre, sans argumentaire.
 `;
-
       const completion = await openai.chat.completions.create({
         model: "gpt-4o-mini",
         messages: [{ role: "user", content: prompt }],
