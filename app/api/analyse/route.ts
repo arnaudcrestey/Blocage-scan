@@ -15,7 +15,7 @@ export async function POST(req: Request) {
       const { profile, description, answers, answerIndexes } = body;
 
       const prompt = `
-Vous êtes un expert en psychologie comportementale, en dynamiques de blocage intérieur et en lecture des mécanismes de protection.
+Vous êtes un expert en psychologie comportementale et en compréhension des mécanismes de blocage.
 
 Votre mission est de fournir une analyse claire, crédible et utile
 à partir d’un diagnostic rapide basé sur 3 questions concernant la manière dont une personne se bloque aujourd’hui.
@@ -39,11 +39,9 @@ RÈGLES IMPORTANTES
 - Ne parlez jamais de "la personne".
 - Le texte doit rester naturel, crédible et facile à lire.
 - Maximum : 90 à 130 mots.
-- Évitez un ton moralisateur, trop clinique, ésotérique ou excessivement affirmatif.
+- Évitez un ton moralisateur, trop clinique ou ésotérique.
 - Le texte doit être fluide, moderne, rassurant et professionnel.
-- Ne faites pas de promesse irréaliste.
-- Ne dramatisez pas.
-- Ne donnez pas l’impression d’un diagnostic médical ou thérapeutique.
+- Ne dramatisez pas et ne surinterprétez pas.
 
 OBJECTIF
 
@@ -51,27 +49,30 @@ Aider l’utilisateur à comprendre rapidement :
 
 - son blocage principal actuel
 - la logique interne de ce blocage
-- ce qui freine aujourd’hui son passage à l’action, sa clarté ou sa décision
+- ce qui freine aujourd’hui son passage à l’action ou sa clarté
 
 STRUCTURE OBLIGATOIRE
 
 Analyse
 
-Rédigez un seul paragraphe court expliquant ce que signifie ce profil de blocage aujourd’hui.
+Rédigez un seul paragraphe court expliquant ce que signifie ce profil aujourd’hui.
 
-Expliquez que ce blocage n’est pas un hasard et qu’il peut être lié notamment à :
+Expliquez que ce blocage n’est pas un hasard et qu’il peut être lié à :
 
 - la personnalité
 - l’histoire émotionnelle
 - les mécanismes de protection
-- les besoins de sécurité, de contrôle ou de cohérence intérieure
+- les besoins de sécurité ou de maîtrise
 
-Le texte doit donner à la personne le sentiment d’être comprise avec justesse, sans surinterprétation.
+Le texte doit donner le sentiment d’être compris avec justesse, sans exagération.
 
-Terminez par une phrase d’ouverture sobre vers une exploration plus approfondie.
+IMPORTANT – POSITIONNEMENT
 
-Mentionnez naturellement qu’arnaudcrestey.com propose d’aller plus loin
-pour clarifier ce qui se joue en profondeur et mieux comprendre les mécanismes à l’œuvre.
+Terminez par une ouverture qui explique subtilement que ce type de diagnostic est un exemple de système.
+
+Faites comprendre que ce type de point d’entrée peut être conçu et adapté à différents contextes professionnels pour aider à clarifier rapidement une situation, engager une réflexion et faciliter un premier échange.
+
+Mentionnez naturellement arnaudcrestey.com comme l’endroit où ce type de dispositif peut être conçu sur mesure.
 `;
 
       const completion = await openai.chat.completions.create({
