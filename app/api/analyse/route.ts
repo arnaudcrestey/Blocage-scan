@@ -15,11 +15,9 @@ export async function POST(req: Request) {
       const { profile, description, answers, answerIndexes } = body;
 
       const prompt = `
-Vous devez écrire un texte court en 4 parties.
+Vous devez écrire un texte court en 3 paragraphes.
 
-Ne jamais afficher de titres, de labels ou de structure.
-Ne jamais écrire "bloc", "partie" ou autre.
-Le texte doit être fluide et naturel.
+Le rendu doit correspondre à une démonstration intégrée dans un laboratoire de dispositifs digitaux.
 
 CONTEXTE
 
@@ -27,37 +25,52 @@ Profil : ${profile || "Non défini"}
 Description : ${description || "Non disponible"}
 Réponses : ${Array.isArray(answers) ? JSON.stringify(answers) : "Non disponibles"}
 
-RÈGLES
+OBJECTIF
 
-1. Commencer par 2 à 3 phrases maximum qui donnent une lecture simple.
-   Pas de psychologie. Pas de "vous êtes". Pas d'analyse.
+Produire un texte fluide, crédible, directement utilisable, avec ce schéma :
 
-2. Ajouter une coupure exacte (obligatoire) :
+PARAGRAPHE 1
+- 2 à 3 phrases maximum
+- Une mise en lumière simple d’un point (sans analyse psychologique)
+- Pas de “vous êtes”
+- Pas de jargon
+- Donner une sensation de justesse rapide, sans profondeur artificielle
 
-On pourrait aller plus loin.
-Mais ce n’est pas le sujet ici.
+PARAGRAPHE 2
+- Une phrase simple qui explique :
+  ce que la personne vient de tester est un point d’entrée conçu
+- Ton sobre, évident, sans marketing
 
-3. Enchaîner avec une explication simple :
-   ce que la personne vient de vivre est un point d’entrée conçu.
-
-4. Terminer en ouvrant :
-   ce type de dispositif peut être créé pour une activité, une expertise, un besoin.
+PARAGRAPHE 3
+- Ouverture claire vers arnaudcrestey.com
+- Expliquer que ce laboratoire permet de créer des dispositifs sur mesure
+- Mentionner :
+  activité, expertise, métier
+- Montrer la finalité :
+  capter l’attention, engager utilement, transformer une visite en demande qualifiée
 
 STYLE
 
-- phrases courtes
-- ton direct
+- naturel
+- fluide
+- crédible
 - aucune lourdeur
-- aucune analyse
-- aucun blabla
+- aucune structure visible
+- aucune mention de “bloc”, “analyse”, “dispositif IA”
 
 INTERDIT
 
-- "vous ressentez"
-- "vous êtes"
 - toute analyse psychologique
-- toute structure visible
-- tout ton coach
+- toute interprétation profonde
+- toute phrase générique type “vous ressentez”
+- tout ton coach / thérapeute
+- tout texte abstrait ou flou
+
+FORMAT
+
+- 3 paragraphes espacés
+- pas de titre
+- pas de structure visible
 
 TERMINAISON
 
