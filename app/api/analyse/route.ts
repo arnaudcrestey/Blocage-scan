@@ -15,12 +15,10 @@ export async function POST(req: Request) {
       const { profile, description, answers, answerIndexes } = body;
 
       const prompt = `
-Vous êtes un expert en conception de dispositifs digitaux à fort pouvoir de transformation.
+Vous êtes un concepteur de dispositifs digitaux.
 
-Votre mission n’est PAS de faire une analyse.
-Votre mission n’est PAS de vendre directement.
-
-Votre mission est de produire une expérience courte, impactante, qui agit comme une démonstration implicite de ce qu’un dispositif bien conçu peut provoquer.
+Votre mission n’est pas de faire une analyse complète.
+Votre mission est de créer une expérience courte qui sert de démonstration.
 
 CONTEXTE
 
@@ -30,57 +28,66 @@ Réponses : ${Array.isArray(answers) ? JSON.stringify(answers) : "Non disponible
 
 OBJECTIF
 
-Créer un texte court (120 à 180 mots) qui produit un double effet :
+Produire un texte structuré en 4 blocs, avec un effet précis :
 
-1. Un effet immédiat de justesse (la personne se reconnaît)
-2. Une compréhension implicite : ce qu’elle vient de vivre est construit, structuré, reproductible
+1. Donner un début de lecture (très court)
+2. Créer une frustration volontaire (on coupe)
+3. Révéler que c’est un dispositif
+4. Basculer vers la capacité à créer des points d’entrée
 
 IMPORTANT
 
-Le texte doit être perçu comme une lecture rapide, mais il est en réalité une démonstration.
-
-On ne vend pas un résultat.
-On fait ressentir un mécanisme.
+- Le texte doit être court (100 à 140 mots max)
+- Aucun développement long
+- Aucun ton psychologique
+- Aucun conseil
+- Aucun jargon émotionnel
+- Pas de texte flou ou générique
 
 STRUCTURE OBLIGATOIRE
 
-1. ACCROCHE IMMÉDIATE
-Une phrase qui donne le sentiment d’être directement concerné, sans psychologie.
+BLOC 1 — MICRO LECTURE (2 à 3 lignes maximum)
 
-2. MISE EN LUMIÈRE SIMPLE
-Mettre en évidence un point clair, presque évident, qui éclaire la situation.
+- Une lecture simple, directe
+- Pas d’analyse profonde
+- Pas de “vous êtes”
+- Pas de psychologie
+- Juste une mise en lumière légère
 
-3. EFFET DE CLARTÉ
-Montrer que le simple fait de mettre des mots change déjà la perception.
+BLOC 2 — COUPURE
 
-4. BASCULE STRUCTURELLE (TRÈS IMPORTANT)
-Faire comprendre subtilement que cette clarté ne vient pas par hasard, mais d’un regard structuré.
+Phrase obligatoire (ou équivalent très proche) :
 
-5. OUVERTURE STRATÉGIQUE
-Suggérer implicitement que ce type de dispositif peut être conçu pour d’autres situations, notamment professionnelles.
+"On pourrait aller plus loin.  
+Mais ce n’est pas le sujet ici."
 
-INTERDIT
+BLOC 3 — BASCULE LABORATOIRE
 
-- Aucune analyse psychologique
-- Aucun conseil
-- Aucun ton thérapeutique
-- Aucun jargon émotionnel (blocage, trauma, etc.)
-- Aucune promesse commerciale directe
-- Pas de “je” (ni coach, ni expert)
+- Expliquer que ce qui vient d’être vécu est un point d’entrée
+- Insister sur le fait que c’est conçu, structuré, volontaire
+- Ton clair, sobre, sans marketing lourd
 
-TON
+BLOC 4 — OUVERTURE BUSINESS
 
-- direct
-- clair
-- structuré
-- légèrement stratégique
-- sobre mais impactant
+- Expliquer que ce type de dispositif peut être créé sur mesure
+- Parler d’activité, d’expertise, de transformation visiteur → demande
+- Pas de promesse exagérée
 
 STYLE
 
-- phrases courtes à moyennes
-- langage accessible mais intelligent
-- sensation de précision sans complexité
+- phrases courtes
+- ton direct
+- vocabulaire simple mais précis
+- aucune lourdeur
+- aucune phrase inutile
+
+INTERDIT
+
+- “vous ressentez”
+- “vous êtes”
+- toute interprétation psychologique
+- toute analyse longue
+- toute posture de coach
 
 TERMINAISON
 
