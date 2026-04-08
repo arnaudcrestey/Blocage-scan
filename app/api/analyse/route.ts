@@ -15,67 +15,58 @@ export async function POST(req: Request) {
       const { profile, description, answers, answerIndexes } = body;
 
       const prompt = `
-Vous êtes un expert en psychologie comportementale et en compréhension des mécanismes de blocage.
+Vous êtes un expert en compréhension des mécanismes de blocage, mais surtout capable de produire un texte qui capte immédiatement l’attention et donne une sensation de justesse.
 
-Votre mission est de fournir une analyse claire, crédible et utile
-à partir d’un diagnostic rapide basé sur 3 questions concernant la manière dont une personne se bloque aujourd’hui.
+Votre mission n’est pas seulement d’analyser.
+Votre mission est de créer une expérience courte, fluide et impactante.
 
 CONTEXTE
 
-Profil dominant détecté : ${profile || "Non défini"}
+Profil : ${profile || "Non défini"}
+Description : ${description || "Non disponible"}
+Réponses : ${Array.isArray(answers) ? JSON.stringify(answers) : "Non disponibles"}
 
-Description de base :
-${description || "Non disponible"}
+RÈGLES
 
-Réponses au diagnostic :
-${Array.isArray(answers) ? JSON.stringify(answers) : "Non disponibles"}
+- Adressez-vous directement à la personne ("vous")
+- Ton naturel, fluide, crédible
+- 90 à 130 mots maximum
+- Aucune dramatisation
+- Aucun jargon psychologique
+- Pas de ton clinique ou thérapeutique
+- Pas de promesse
 
-Index des réponses :
-${Array.isArray(answerIndexes) ? JSON.stringify(answerIndexes) : "Non disponibles"}
+STRUCTURE (TRÈS IMPORTANT)
 
-RÈGLES D’ÉCRITURE
+1. ACCROCHE IMMÉDIATE (1 phrase)
+Commencez par une phrase qui donne une impression de reconnaissance immédiate.
 
-- Adressez-vous directement à la personne en utilisant "vous".
-- Ne parlez jamais de "la personne".
-- Le texte doit être naturel, fluide et crédible.
-- Longueur : entre 90 et 130 mots.
-- Évitez tout ton moralisateur, clinique, ésotérique ou trop affirmatif.
-- Ne dramatisez pas.
-- Ne faites pas de promesse.
-- Ne donnez pas l’impression d’un diagnostic médical.
+2. MISE EN LUMIÈRE
+Expliquez simplement le mécanisme en jeu.
+Montrez que ce blocage n’est pas un hasard mais une logique interne (protection, sécurité, maîtrise…).
 
-OBJECTIF
+3. IMPACT ACTUEL
+Montrez en quoi cela freine aujourd’hui (clarté, décision, passage à l’action).
 
-Aider à comprendre rapidement :
+4. BASCULE (clé stratégique)
+Créez une légère prise de recul :
+faites sentir que ce que la personne vient de lire est structuré, construit.
 
-- le blocage principal actuel
-- la logique interne de ce blocage
-- ce qui freine aujourd’hui la clarté, la décision ou le passage à l’action
+5. OUVERTURE IMPLICITE (très subtil)
+Sans expliquer, sans vendre, sans argumenter :
+faites comprendre que ce type d’expérience peut être imaginé et adapté à d’autres contextes.
 
-STRUCTURE
+INTERDIT
 
-Rédigez un seul paragraphe fluide.
+- Ne pas parler de "test", "outil", "méthode"
+- Ne pas expliquer le concept
+- Ne pas faire de discours commercial
+- Ne pas inviter à cliquer ou acheter
 
-Expliquez que ce blocage n’est pas un hasard et qu’il peut être lié notamment à :
+TERMINAISON
 
-- la personnalité
-- l’histoire émotionnelle
-- des mécanismes de protection
-- un besoin de sécurité, de cohérence ou de maîtrise
-
-Le texte doit donner une sensation de justesse et de reconnaissance, sans surinterprétation.
-
-FIN (TRÈS IMPORTANT)
-
-Terminez par une seule phrase, courte et naturelle.
-
-- Ne décrivez pas de système
-- N’expliquez rien
-- Ne faites pas de discours commercial
-
-Faites simplement sentir que ce type d’approche peut aussi être utilisé dans d’autres contextes pour clarifier rapidement une situation et faciliter un échange.
-
-Mentionnez arnaudcrestey.com de manière sobre, sans argumentaire.
+Terminez sobrement par :
+arnaudcrestey.com
 `;
       const completion = await openai.chat.completions.create({
         model: "gpt-4o-mini",
