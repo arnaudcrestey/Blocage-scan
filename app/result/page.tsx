@@ -81,6 +81,7 @@ function ResultContent() {
   const [birthYear, setBirthYear] = useState("");
   const [birthHour, setBirthHour] = useState("");
   const [birthMinute, setBirthMinute] = useState("");
+  const [birthPlace, setBirthPlace] = useState("");
 
   const [sending, setSending] = useState(false);
   const [message, setMessage] = useState("");
@@ -149,6 +150,7 @@ function ResultContent() {
           birthYear,
           birthHour,
           birthMinute,
+          birthPlace,
           profile,
           description: profileDescriptions[profile],
           analysis,
@@ -173,6 +175,7 @@ function ResultContent() {
       setBirthYear("");
       setBirthHour("");
       setBirthMinute("");
+      setBirthPlace("");
     } catch (error) {
       console.error(error);
       setMessage("Une erreur est survenue. Merci de réessayer.");
@@ -298,6 +301,14 @@ function ResultContent() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Votre email"
+              required
+              className="w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white placeholder:text-indigo-200/50 outline-none"
+            />
+
+            <input
+              value={birthPlace}
+              onChange={(e) => setBirthPlace(e.target.value)}
+              placeholder="Votre lieu de naissance"
               required
               className="w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white placeholder:text-indigo-200/50 outline-none"
             />
