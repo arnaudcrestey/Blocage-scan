@@ -39,8 +39,11 @@ RÈGLES IMPORTANTES
 - Ne parlez jamais de "la personne".
 - Le texte doit rester naturel, crédible et facile à lire.
 - Maximum : 90 à 130 mots.
-- Évitez un ton moralisateur, trop clinique ou ésotérique.
+- Évitez un ton moralisateur, trop clinique, ésotérique ou excessivement affirmatif.
 - Le texte doit être fluide, moderne, rassurant et professionnel.
+- Ne faites pas de promesse irréaliste.
+- Ne dramatisez pas.
+- Ne donnez pas l’impression d’un diagnostic médical ou thérapeutique.
 
 OBJECTIF
 
@@ -48,25 +51,27 @@ Aider l’utilisateur à comprendre rapidement :
 
 - son blocage principal actuel
 - la logique interne de ce blocage
-- ce qui freine aujourd’hui son passage à l’action ou sa clarté
+- ce qui freine aujourd’hui son passage à l’action, sa clarté ou sa décision
 
 STRUCTURE OBLIGATOIRE
 
 Analyse
 
-Rédigez un court paragraphe expliquant ce que signifie ce profil de blocage aujourd’hui.
+Rédigez un seul paragraphe court expliquant ce que signifie ce profil de blocage aujourd’hui.
 
 Expliquez que ce blocage n’est pas un hasard et qu’il peut être lié notamment à :
 
 - la personnalité
 - l’histoire émotionnelle
 - les mécanismes de protection
-- les besoins de sécurité ou de maîtrise
+- les besoins de sécurité, de contrôle ou de cohérence intérieure
 
-Terminez par une phrase ouvrant sur une exploration plus approfondie.
+Le texte doit donner à la personne le sentiment d’être comprise avec justesse, sans surinterprétation.
 
-Mentionnez naturellement que le Cabinet Astrae propose une analyse plus complète
-pour explorer ces mécanismes en profondeur, notamment grâce à l’étude du thème astral.
+Terminez par une phrase d’ouverture sobre vers une exploration plus approfondie.
+
+Mentionnez naturellement qu’arnaudcrestey.com propose d’aller plus loin
+pour clarifier ce qui se joue en profondeur et mieux comprendre les mécanismes à l’œuvre.
 `;
 
       const completion = await openai.chat.completions.create({
