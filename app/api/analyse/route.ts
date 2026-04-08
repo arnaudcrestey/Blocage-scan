@@ -15,62 +15,70 @@ export async function POST(req: Request) {
       const { profile, description, answers, answerIndexes } = body;
 
       const prompt = `
-Écris un texte court en 3 paragraphes, prêt à être affiché sur arnaudcrestey.com.
+Écris un texte court premium en 3 paragraphes.
 
-La personne vient de tester un point d’entrée (ex : Blocage Scan).
-Le texte ne doit pas être une analyse.
-C’est une micro-lecture suivie d’une bascule vers l’idée du laboratoire.
+Ce texte apparaît sur arnaudcrestey.com après un point d’entrée.
+Il doit être éditorial, sobre, précis.
 
-CONTEXTE
+IMPORTANT
 
-Profil : ${profile || ""}
-Description : ${description || ""}
-Réponses : ${Array.isArray(answers) ? JSON.stringify(answers) : ""}
+- Ne pas analyser la personne
+- Ne pas utiliser directement les mots des réponses
+- Ne pas faire de psychologie
+- Chercher la justesse, pas l’explication
 
-RÈGLES STRICTES
+---
 
 PARAGRAPHE 1
+
 - 2 ou 3 phrases maximum
-- Une mise en lumière simple et juste
-- Pas de psychologie
-- Pas de “vous êtes”, pas de “vous ressentez”
-- Ton sobre, crédible
+- Une situation décrite avec précision
+- Peu de mots, mais justes
+- Donner une image mentale claire
 - Se termine obligatoirement par "..."
 
+---
+
 PARAGRAPHE 2
-- Ligne vide avant
-- Commence exactement par :
-Ce que vous venez de tester ici est un point d’entrée conçu pour provoquer ce type de déclic rapidement.
+
+Ligne vide puis écrire :
+
+Ce que vous venez de tester ici est un point d’entrée conçu pour faire apparaître ce qui ne l’était pas encore, en quelques instants.
+
+---
 
 PARAGRAPHE 3
-- Ligne vide avant
-- Ouvre sur arnaudcrestey.com
-- Explique que ce laboratoire permet de créer des dispositifs sur mesure
-- Mentionne activité, expertise ou métier
-- Finalité : capter l’attention, engager utilement, transformer une visite en demande qualifiée
+
+Ligne vide puis écrire un paragraphe fluide :
+
+- évoquer le laboratoire arnaudcrestey.com
+- parler de dispositifs sur mesure
+- activité / expertise / métier
+- capter l’attention, structurer, transformer en demande
+
+---
 
 STYLE
 
-- naturel, fluide, premium
-- phrases simples
+- haut de gamme
+- éditorial
+- précis
 - aucune lourdeur
-- aucune analyse
-- aucun ton coach ou thérapeute
+- aucune banalité
+- aucune phrase générique
+
+---
 
 INTERDIT
 
-- analyse psychologique
-- interprétation profonde
-- phrases génériques
-- jargon émotionnel
-- structure visible
-- mentions type : blocage intérieur, peur, trauma, etc.
+- analyse
+- psychologie
+- “vous ressentez”, “vous êtes”
+- phrases creuses
+- répétitions
+- ton coach
 
-FORMAT
-
-- 3 paragraphes
-- ligne vide entre chaque
-- aucun titre
+---
 
 TERMINAISON
 
