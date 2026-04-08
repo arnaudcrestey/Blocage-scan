@@ -15,9 +15,12 @@ export async function POST(req: Request) {
       const { profile, description, answers, answerIndexes } = body;
 
       const prompt = `
-Vous devez écrire un texte court en 3 paragraphes.
+Vous devez écrire un texte court, premium, fluide et directement utilisable en 3 paragraphes.
 
-Le rendu doit correspondre à une démonstration intégrée dans un laboratoire de dispositifs digitaux.
+Le texte apparaît dans le laboratoire d’arnaudcrestey.com, après qu’une personne a testé un point d’entrée comme Blocage Scan.
+Il ne s’agit pas d’une analyse complète.
+Il s’agit d’une micro-lecture suivie d’une bascule vers l’idée centrale :
+ce que la personne vient de vivre n’est qu’un exemple de point d’entrée que l’on peut concevoir sur mesure pour une activité.
 
 CONTEXTE
 
@@ -27,52 +30,62 @@ Réponses : ${Array.isArray(answers) ? JSON.stringify(answers) : "Non disponible
 
 OBJECTIF
 
-Produire un texte fluide, crédible, directement utilisable, avec ce schéma :
+Produire un texte en 3 paragraphes avec cette logique :
 
 PARAGRAPHE 1
+- Faire une micro-lecture courte, crédible et élégante
 - 2 à 3 phrases maximum
-- Une mise en lumière simple d’un point (sans analyse psychologique)
-- Pas de “vous êtes”
-- Pas de jargon
-- Donner une sensation de justesse rapide, sans profondeur artificielle
+- Faire émerger un point juste, simple, utile
+- Aucun ton psychologique lourd
+- Aucun jargon
+- Aucune profondeur artificielle
+- Le premier paragraphe doit se terminer par "..."
 
 PARAGRAPHE 2
-- Une phrase simple qui explique :
-  ce que la personne vient de tester est un point d’entrée conçu
-- Ton sobre, évident, sans marketing
+- Commencer exactement par :
+Ce que vous venez de tester ici est un point d’entrée conçu pour provoquer ce type de déclic rapidement.
+- Ce paragraphe doit être isolé visuellement, avec une ligne vide avant
 
 PARAGRAPHE 3
-- Ouverture claire vers arnaudcrestey.com
-- Expliquer que ce laboratoire permet de créer des dispositifs sur mesure
-- Mentionner :
-  activité, expertise, métier
+- Ouvrir clairement sur arnaudcrestey.com
+- Expliquer que ce laboratoire permet d’imaginer et de créer des dispositifs sur mesure
+- Mentionner activité, expertise ou métier
 - Montrer la finalité :
-  capter l’attention, engager utilement, transformer une visite en demande qualifiée
+capter l’attention, engager utilement, transformer une visite en demande qualifiée
 
 STYLE
 
-- naturel
+- ton premium
+- sobre
+- clair
 - fluide
 - crédible
+- légèrement stratégique
 - aucune lourdeur
+- aucune phrase générique
+- aucun effet “coach”
 - aucune structure visible
-- aucune mention de “bloc”, “analyse”, “dispositif IA”
+- pas de titre
+- pas de puces
 
 INTERDIT
 
 - toute analyse psychologique
 - toute interprétation profonde
-- toute phrase générique type “vous ressentez”
-- tout ton coach / thérapeute
+- toute phrase de type “vous ressentez”, “vous êtes”, “votre peur”, “votre blessure”
+- tout ton thérapeutique
 - tout texte abstrait ou flou
+- toute mention d’intelligence artificielle
+- toute promesse exagérée
+- tout vocabulaire comme : trauma, blocage profond, mécanisme intérieur, protection intérieure, aspiration profonde
 
-FORMAT
+FORMAT OBLIGATOIRE
 
-- 3 paragraphes espacés
-- pas de titre
-- pas de structure visible
-
-TERMINAISON
+- 3 paragraphes
+- une ligne vide entre chaque paragraphe
+- le premier paragraphe se termine par "..."
+- le deuxième paragraphe commence exactement par la phrase imposée
+- terminer uniquement par :
 
 arnaudcrestey.com
 `;
