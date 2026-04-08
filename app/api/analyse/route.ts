@@ -15,10 +15,11 @@ export async function POST(req: Request) {
       const { profile, description, answers, answerIndexes } = body;
 
       const prompt = `
-Vous êtes un expert en compréhension des mécanismes de blocage, mais surtout capable de produire un texte qui capte immédiatement l’attention et donne une sensation de justesse.
+Vous êtes un expert en conception de dispositifs digitaux qui transforment une situation floue en prise de conscience rapide.
 
-Votre mission n’est pas seulement d’analyser.
-Votre mission est de créer une expérience courte, fluide et impactante.
+Votre mission n’est pas de faire une analyse psychologique.
+
+Votre mission est de produire un texte court, impactant, qui donne l’impression d’une lecture personnalisée tout en montrant implicitement la puissance du dispositif.
 
 CONTEXTE
 
@@ -26,46 +27,56 @@ Profil : ${profile || "Non défini"}
 Description : ${description || "Non disponible"}
 Réponses : ${Array.isArray(answers) ? JSON.stringify(answers) : "Non disponibles"}
 
-RÈGLES
+OBJECTIF
 
-- Adressez-vous directement à la personne ("vous")
-- Ton naturel, fluide, crédible
-- 90 à 130 mots maximum
-- Aucune dramatisation
-- Aucun jargon psychologique
-- Pas de ton clinique ou thérapeutique
-- Pas de promesse
+Créer un texte qui :
 
-STRUCTURE (TRÈS IMPORTANT)
+- capte immédiatement l’attention
+- donne une sensation de justesse rapide
+- met en évidence un point clé de la situation
+- montre la valeur d’un regard structuré
+- fait ressentir que cette expérience a été conçue
 
-1. ACCROCHE IMMÉDIATE (1 phrase)
-Commencez par une phrase qui donne une impression de reconnaissance immédiate.
+IMPORTANT
+
+Le texte n’est PAS une analyse.
+Le texte est une démonstration.
+
+STRUCTURE
+
+1. PHRASE D’ACCROCHE
+Une phrase qui donne immédiatement le sentiment d’être concerné.
 
 2. MISE EN LUMIÈRE
-Expliquez simplement le mécanisme en jeu.
-Montrez que ce blocage n’est pas un hasard mais une logique interne (protection, sécurité, maîtrise…).
+Un angle clair, simple, presque évident, qui donne de la valeur.
 
-3. IMPACT ACTUEL
-Montrez en quoi cela freine aujourd’hui (clarté, décision, passage à l’action).
+3. EFFET “CLARTÉ”
+Faire ressentir que mettre des mots change déjà la perception.
 
-4. BASCULE (clé stratégique)
-Créez une légère prise de recul :
-faites sentir que ce que la personne vient de lire est structuré, construit.
+4. BASCULE (TRÈS IMPORTANT)
+Faire comprendre que ce que la personne vient de vivre est structuré, construit, intentionnel.
 
-5. OUVERTURE IMPLICITE (très subtil)
-Sans expliquer, sans vendre, sans argumenter :
-faites comprendre que ce type d’expérience peut être imaginé et adapté à d’autres contextes.
+5. PROJECTION IMPLICITE
+Suggérer que ce type d’expérience peut être créé pour d’autres contextes.
 
 INTERDIT
 
-- Ne pas parler de "test", "outil", "méthode"
-- Ne pas expliquer le concept
-- Ne pas faire de discours commercial
-- Ne pas inviter à cliquer ou acheter
+- Pas de psychologie
+- Pas de “blocage”, “trauma”, “émotion profonde”
+- Pas de conseil
+- Pas d’introspection longue
+- Pas de ton thérapeute
+
+TON
+
+- direct
+- clair
+- intelligent
+- légèrement stratégique
 
 TERMINAISON
 
-Terminez sobrement par :
+Terminez simplement par :
 arnaudcrestey.com
 `;
       const completion = await openai.chat.completions.create({
