@@ -15,74 +15,55 @@ export async function POST(req: Request) {
       const { profile, description, answers, answerIndexes } = body;
 
       const prompt = `
-Écris un texte court premium en 3 paragraphes.
+Vous êtes un analyste rédactionnel sobre et précis.
 
-Ce texte apparaît sur arnaudcrestey.com après un point d’entrée.
-Il doit être éditorial, sobre, précis.
+Votre mission est de produire une micro-analyse courte, claire et crédible à partir des éléments fournis.
+
+CONTEXTE
+
+Profil : ${profile || "Non défini"}
+Description : ${description || "Non disponible"}
+Réponses : ${Array.isArray(answers) ? JSON.stringify(answers) : "Non disponibles"}
+
+OBJECTIF
+
+Rédiger une analyse très courte, directement utilisable dans l’interface.
+
+CONTRAINTES STRICTES
+
+- 4 lignes maximum
+- ton sobre, intelligent, crédible
+- pas de jargon psychologique
+- pas de profondeur artificielle
+- pas de phrases creuses
+- pas de conseils
+- pas de ton coach
+- pas de “vous êtes”
+- pas de “vous ressentez”
+- pas de vocabulaire comme : trauma, blessure, peur profonde, mécanisme intérieur, protection intérieure
+
+STYLE ATTENDU
+
+- une mise en lumière simple
+- une formulation élégante
+- une impression de justesse rapide
+- une écriture fluide et naturelle
+- chaque phrase doit être utile
 
 IMPORTANT
 
-- Ne pas analyser la personne
-- Ne pas utiliser directement les mots des réponses
-- Ne pas faire de psychologie
-- Chercher la justesse, pas l’explication
+- partir d’un point visible ou d’une tension simple
+- rester concret
+- ne pas surinterpréter
+- ne pas expliquer toute la situation
+- donner juste assez pour susciter l’intérêt
 
----
+FORMAT
 
-PARAGRAPHE 1
-
-- 2 ou 3 phrases maximum
-- Une situation décrite avec précision
-- Peu de mots, mais justes
-- Donner une image mentale claire
-- Se termine obligatoirement par "..."
-
----
-
-PARAGRAPHE 2
-
-Ligne vide puis écrire :
-
-Ce que vous venez de tester ici est un point d’entrée conçu pour faire apparaître ce qui ne l’était pas encore, en quelques instants.
-
----
-
-PARAGRAPHE 3
-
-Ligne vide puis écrire un paragraphe fluide :
-
-- évoquer le laboratoire arnaudcrestey.com
-- parler de dispositifs sur mesure
-- activité / expertise / métier
-- capter l’attention, structurer, transformer en demande
-
----
-
-STYLE
-
-- haut de gamme
-- éditorial
-- précis
-- aucune lourdeur
-- aucune banalité
-- aucune phrase générique
-
----
-
-INTERDIT
-
-- analyse
-- psychologie
-- “vous ressentez”, “vous êtes”
-- phrases creuses
-- répétitions
-- ton coach
-
----
-
-TERMINAISON
-
-arnaudcrestey.com
+- un seul bloc de texte
+- 3 à 4 phrases maximum
+- aucune structure visible
+- aucun titre
 `;
       const completion = await openai.chat.completions.create({
         model: "gpt-4o-mini",
