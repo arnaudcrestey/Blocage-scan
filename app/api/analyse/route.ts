@@ -15,77 +15,64 @@ export async function POST(req: Request) {
       const { profile, description, answers, answerIndexes } = body;
 
       const prompt = `
-Vous devez écrire un texte court, premium, fluide et directement utilisable en 3 paragraphes.
+Écris un texte court en 3 paragraphes, prêt à être affiché sur arnaudcrestey.com.
 
-Le texte apparaît dans le laboratoire d’arnaudcrestey.com, après qu’une personne a testé un point d’entrée comme Blocage Scan.
-Il ne s’agit pas d’une analyse complète.
-Il s’agit d’une micro-lecture suivie d’une bascule vers l’idée centrale :
-ce que la personne vient de vivre n’est qu’un exemple de point d’entrée que l’on peut concevoir sur mesure pour une activité.
+La personne vient de tester un point d’entrée (ex : Blocage Scan).
+Le texte ne doit pas être une analyse.
+C’est une micro-lecture suivie d’une bascule vers l’idée du laboratoire.
 
 CONTEXTE
 
-Profil : ${profile || "Non défini"}
-Description : ${description || "Non disponible"}
-Réponses : ${Array.isArray(answers) ? JSON.stringify(answers) : "Non disponibles"}
+Profil : ${profile || ""}
+Description : ${description || ""}
+Réponses : ${Array.isArray(answers) ? JSON.stringify(answers) : ""}
 
-OBJECTIF
-
-Produire un texte en 3 paragraphes avec cette logique :
+RÈGLES STRICTES
 
 PARAGRAPHE 1
-- Faire une micro-lecture courte, crédible et élégante
-- 2 à 3 phrases maximum
-- Faire émerger un point juste, simple, utile
-- Aucun ton psychologique lourd
-- Aucun jargon
-- Aucune profondeur artificielle
-- Le premier paragraphe doit se terminer par "..."
+- 2 ou 3 phrases maximum
+- Une mise en lumière simple et juste
+- Pas de psychologie
+- Pas de “vous êtes”, pas de “vous ressentez”
+- Ton sobre, crédible
+- Se termine obligatoirement par "..."
 
 PARAGRAPHE 2
-- Commencer exactement par :
+- Ligne vide avant
+- Commence exactement par :
 Ce que vous venez de tester ici est un point d’entrée conçu pour provoquer ce type de déclic rapidement.
-- Ce paragraphe doit être isolé visuellement, avec une ligne vide avant
 
 PARAGRAPHE 3
-- Ouvrir clairement sur arnaudcrestey.com
-- Expliquer que ce laboratoire permet d’imaginer et de créer des dispositifs sur mesure
-- Mentionner activité, expertise ou métier
-- Montrer la finalité :
-capter l’attention, engager utilement, transformer une visite en demande qualifiée
+- Ligne vide avant
+- Ouvre sur arnaudcrestey.com
+- Explique que ce laboratoire permet de créer des dispositifs sur mesure
+- Mentionne activité, expertise ou métier
+- Finalité : capter l’attention, engager utilement, transformer une visite en demande qualifiée
 
 STYLE
 
-- ton premium
-- sobre
-- clair
-- fluide
-- crédible
-- légèrement stratégique
+- naturel, fluide, premium
+- phrases simples
 - aucune lourdeur
-- aucune phrase générique
-- aucun effet “coach”
-- aucune structure visible
-- pas de titre
-- pas de puces
+- aucune analyse
+- aucun ton coach ou thérapeute
 
 INTERDIT
 
-- toute analyse psychologique
-- toute interprétation profonde
-- toute phrase de type “vous ressentez”, “vous êtes”, “votre peur”, “votre blessure”
-- tout ton thérapeutique
-- tout texte abstrait ou flou
-- toute mention d’intelligence artificielle
-- toute promesse exagérée
-- tout vocabulaire comme : trauma, blocage profond, mécanisme intérieur, protection intérieure, aspiration profonde
+- analyse psychologique
+- interprétation profonde
+- phrases génériques
+- jargon émotionnel
+- structure visible
+- mentions type : blocage intérieur, peur, trauma, etc.
 
-FORMAT OBLIGATOIRE
+FORMAT
 
 - 3 paragraphes
-- une ligne vide entre chaque paragraphe
-- le premier paragraphe se termine par "..."
-- le deuxième paragraphe commence exactement par la phrase imposée
-- terminer uniquement par :
+- ligne vide entre chaque
+- aucun titre
+
+TERMINAISON
 
 arnaudcrestey.com
 `;
