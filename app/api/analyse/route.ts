@@ -15,66 +15,62 @@ export async function POST(req: Request) {
       const { profile, description, answers, answerIndexes } = body;
 
       const prompt = `
-Écris un texte court en 3 paragraphes.
+Écris un texte court en 3 paragraphes, prêt à être affiché sur arnaudcrestey.com.
 
-IMPORTANT :
-- N’interprète pas la personne
-- Ne fais aucune analyse
-- Ne reformule pas les réponses
-- N’explique pas une situation personnelle
+La personne vient de tester un point d’entrée (ex : Blocage Scan).
+Le texte ne doit pas être une analyse.
+C’est une micro-lecture suivie d’une bascule vers l’idée du laboratoire.
 
-Le texte doit donner une impression de justesse,
-sans jamais expliquer pourquoi.
+CONTEXTE
 
----
+Profil : ${profile || ""}
+Description : ${description || ""}
+Réponses : ${Array.isArray(answers) ? JSON.stringify(answers) : ""}
+
+RÈGLES STRICTES
 
 PARAGRAPHE 1
-
-Écris 2 ou 3 phrases simples qui décrivent une situation générale,
-sans parler directement de la personne.
-
-Exemple de ton attendu :
-- rester factuel
-- rester sobre
-- éviter toute profondeur artificielle
-
-Termine obligatoirement par "..."
-
----
+- 2 ou 3 phrases maximum
+- Une mise en lumière simple et juste
+- Pas de psychologie
+- Pas de “vous êtes”, pas de “vous ressentez”
+- Ton sobre, crédible
+- Se termine obligatoirement par "..."
 
 PARAGRAPHE 2
-
-Ligne vide puis écrire EXACTEMENT :
-
+- Ligne vide avant
+- Commence exactement par :
 Ce que vous venez de tester ici est un point d’entrée conçu pour provoquer ce type de déclic rapidement.
 
----
-
 PARAGRAPHE 3
+- Ligne vide avant
+- Ouvre sur arnaudcrestey.com
+- Explique que ce laboratoire permet de créer des dispositifs sur mesure
+- Mentionne activité, expertise ou métier
+- Finalité : capter l’attention, engager utilement, transformer une visite en demande qualifiée
 
-Ligne vide puis écrire un paragraphe qui explique simplement :
+STYLE
 
-- ce laboratoire permet de créer des dispositifs sur mesure
-- pour une activité, une expertise ou un métier
-- ces dispositifs servent à capter l’attention, engager utilement, transformer une visite en demande qualifiée
-
-Ton :
-- professionnel
-- sobre
-- sans marketing lourd
-
----
+- naturel, fluide, premium
+- phrases simples
+- aucune lourdeur
+- aucune analyse
+- aucun ton coach ou thérapeute
 
 INTERDIT
 
-- toute analyse
-- toute psychologie
-- toute phrase du type :
-  "vous ressentez", "vous êtes", "votre situation"
-- toute interprétation
-- tout texte abstrait ou flou
+- analyse psychologique
+- interprétation profonde
+- phrases génériques
+- jargon émotionnel
+- structure visible
+- mentions type : blocage intérieur, peur, trauma, etc.
 
----
+FORMAT
+
+- 3 paragraphes
+- ligne vide entre chaque
+- aucun titre
 
 TERMINAISON
 
