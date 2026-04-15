@@ -39,6 +39,10 @@ export default function RadarBlockage({ data }: Props) {
       return { ...item, subject: "Calme" };
     }
 
+    if (item.subject === "Sécurité") {
+      return { ...item, subject: "Sûreté" };
+    }
+
     return item;
   });
 
