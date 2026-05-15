@@ -74,19 +74,6 @@ function ResultContent() {
   const [analysis, setAnalysis] = useState("Analyse en cours...");
   const [loadingAnalysis, setLoadingAnalysis] = useState(true);
 
-  const [firstName, setFirstName] = useState("");
-  const [email, setEmail] = useState("");
-  const [birthDay, setBirthDay] = useState("");
-  const [birthMonth, setBirthMonth] = useState("");
-  const [birthYear, setBirthYear] = useState("");
-  const [birthHour, setBirthHour] = useState("");
-  const [birthMinute, setBirthMinute] = useState("");
-  const [birthPlace, setBirthPlace] = useState("");
-
-  const [sending, setSending] = useState(false);
-  const [message, setMessage] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-
   useEffect(() => {
     const runAnalysis = async () => {
       try {
@@ -119,7 +106,7 @@ function ResultContent() {
       } catch (error) {
         console.error(error);
         setAnalysis(
-          "Ce blocage n’est pas un hasard. Il traduit une manière intérieure de vous protéger, d’anticiper ou de garder la maîtrise. Le comprendre permet déjà de reprendre de la clarté et d’avancer plus justement."
+          "Ce blocage traduit une manière intérieure de vous protéger, d’anticiper ou de garder la maîtrise. Le comprendre permet déjà de reprendre de la clarté et d’avancer plus justement."
         );
       } finally {
         setLoadingAnalysis(false);
@@ -129,99 +116,6 @@ function ResultContent() {
     runAnalysis();
   }, [profile, answerProfiles, answerIndexes]);
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-
-    try {
-      setSending(true);
-      setMessage("");
-
-      const res = await fetch("/api/analyse", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          mode: "lead",
-          firstName,
-          email,
-          birthDay,
-          birthMonth,
-          birthYear,
-          birthHour,
-          birthMinute,
-          birthPlace,
-          profile,
-          description: profileDescriptions[profile],
-          analysis,
-          answers: answerProfiles,
-          answerIndexes,
-        }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data?.error || "Erreur envoi");
-      }
-
-      setMessage("Votre demande a bien été envoyée.");
-      setSubmitted(true);
-
-      setFirstName("");
-      setEmail("");
-      setBirthDay("");
-      setBirthMonth("");
-      setBirthYear("");
-      setBirthHour("");
-      setBirthMinute("");
-      setBirthPlace("");
-    } catch (error) {
-      console.error(error);
-      setMessage("Une erreur est survenue. Merci de réessayer.");
-    } finally {
-      setSending(false);
-    }
-  }
-
-  if (submitted) {
-    return (
-      <main className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 py-8 text-white sm:py-12">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,#16185f_0%,#25156f_35%,#48289d_100%)]" />
-        <div className="absolute -left-24 -top-24 h-96 w-96 rounded-full bg-violet-500/30 blur-3xl" />
-        <div className="absolute bottom-0 right-0 h-[500px] w-[500px] rounded-full bg-indigo-500/30 blur-3xl" />
-
-        <section className="relative z-10 w-full max-w-2xl rounded-3xl border border-white/20 bg-white/10 p-8 text-center shadow-2xl backdrop-blur-xl sm:p-12">
-          <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full border border-white/20 bg-white/10 text-3xl">
-            ✓
-          </div>
-
-          <h1 className="text-3xl font-semibold sm:text-4xl">
-            Demande envoyée
-          </h1>
-
-          <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-indigo-100/85 sm:text-lg">
-            Votre première lecture personnalisée vous sera envoyée par email
-            dans quelques instants.
-          </p>
-
-          <p className="mt-4 text-sm text-indigo-200/70">
-            Pensez à vérifier vos spams si vous ne voyez rien apparaître.
-          </p>
-
-          <div className="mt-8">
-            <Link
-              href="/"
-              className="inline-flex rounded-2xl bg-gradient-to-r from-cyan-400 to-violet-500 px-6 py-3 text-sm font-semibold text-white transition hover:opacity-90"
-            >
-              Retour à l’accueil
-            </Link>
-          </div>
-        </section>
-      </main>
-    );
-  }
-
   return (
     <main className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 py-8 text-white sm:py-12">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,#16185f_0%,#25156f_35%,#48289d_100%)]" />
@@ -229,7 +123,7 @@ function ResultContent() {
       <div className="absolute bottom-0 right-0 h-[500px] w-[500px] rounded-full bg-indigo-500/30 blur-3xl" />
 
       <section className="relative z-10 w-full max-w-5xl space-y-6 rounded-3xl border border-white/20 bg-white/10 p-4 shadow-2xl backdrop-blur-xl sm:space-y-8 sm:p-8 md:p-10">
-        <div className="text-center space-y-2">
+        <div className="space-y-2 text-center">
           <p className="text-[10px] uppercase tracking-[0.24em] text-indigo-200/60 sm:text-xs">
             Résultat Blocage Scan
           </p>
@@ -241,16 +135,18 @@ function ResultContent() {
 
         <div className="grid gap-4 md:grid-cols-2 md:gap-6">
           <div className="rounded-2xl border border-white/10 bg-white/5 p-5 sm:p-6">
-            <h2 className="mb-3 font-semibold">Diagnostic principal</h2>
+            <h2 className="mb-3 text-lg font-semibold">
+              Diagnostic principal
+            </h2>
 
-            <p className="text-sm leading-relaxed text-indigo-100/80">
+            <p className="text-sm leading-relaxed text-indigo-100/80 sm:text-base">
               {profileDescriptions[profile]}
             </p>
 
-            <ul className="mt-4 space-y-1 text-xs text-indigo-200/70">
-              <li>• Compréhension de votre fonctionnement interne</li>
-              <li>• Identification de votre blocage dominant</li>
-              <li>• Mise en lumière de vos mécanismes invisibles</li>
+            <ul className="mt-4 space-y-1 text-xs text-indigo-200/70 sm:text-sm">
+              <li>• Compréhension du fonctionnement interne</li>
+              <li>• Identification du blocage dominant</li>
+              <li>• Mise en lumière des mécanismes invisibles</li>
             </ul>
           </div>
 
@@ -264,141 +160,78 @@ function ResultContent() {
         </div>
 
         <div className="rounded-2xl border border-white/10 bg-white/5 p-5 sm:p-6">
-          <h2 className="mb-2 font-semibold">Analyse personnalisée</h2>
+          <h2 className="mb-2 text-lg font-semibold">
+            Analyse personnalisée
+          </h2>
 
-          <p className="text-sm leading-relaxed text-indigo-100/80">
+          <p className="text-sm leading-relaxed text-indigo-100/80 sm:text-base">
             {loadingAnalysis ? "Analyse en cours..." : analysis}
           </p>
         </div>
 
-        <div className="rounded-2xl border border-white/10 bg-white/5 p-5 text-center sm:p-6">
-          <h3 className="text-lg font-semibold">
-            Comprendre réellement votre fonctionnement
+        <div className="rounded-2xl border border-white/10 bg-gradient-to-b from-white/10 to-white/0 p-6 text-center shadow-xl sm:p-8 md:p-10">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-cyan-300 sm:text-xs">
+            Exemple de point d’entrée interactif
+          </p>
+
+          <h3 className="mx-auto mt-3 max-w-3xl text-2xl font-semibold sm:text-3xl">
+            Transformer ce concept en outil pour votre activité
           </h3>
 
-          <p className="mt-3 text-sm text-indigo-200/70">
-            Au <span className="text-cyan-300">Cabinet Astrae</span>, nous analysons en profondeur
-            vos mécanismes internes pour vous aider à dépasser ce blocage.
+          <p className="mx-auto mt-4 max-w-3xl text-sm leading-relaxed text-indigo-100/80 sm:text-base">
+            Blocage Scan est une démonstration de parcours interactif. Ce type
+            d’expérience peut être adapté à votre domaine pour mieux orienter un
+            utilisateur, clarifier un besoin, valoriser une expertise ou créer
+            un point d’entrée plus engageant qu’un formulaire classique.
           </p>
 
-          <p className="mt-3 text-xs text-indigo-200/60">
-            🎁 Recevez{" "}
-            <span className="font-semibold text-cyan-300">gratuitement</span>{" "}
-            votre lecture personnalisée complète
-          </p>
-
-          <form onSubmit={handleSubmit} className="mx-auto mt-6 max-w-md space-y-4">
-            <input
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              placeholder="Votre prénom"
-              required
-              className="w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white placeholder:text-indigo-200/50 outline-none"
-            />
-
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Votre email"
-              required
-              className="w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white placeholder:text-indigo-200/50 outline-none"
-            />
-
-            <input
-              value={birthPlace}
-              onChange={(e) => setBirthPlace(e.target.value)}
-              placeholder="Votre lieu de naissance"
-              required
-              className="w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white placeholder:text-indigo-200/50 outline-none"
-            />
-
-            <div className="space-y-2 text-left">
-              <p className="text-xs uppercase tracking-[0.18em] text-indigo-200/65">
-                Date de naissance
+          <div className="mt-8 grid gap-4 text-left md:grid-cols-3">
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+              <h4 className="mb-2 font-semibold text-cyan-300">
+                Clarifier un besoin
+              </h4>
+              <p className="text-sm leading-relaxed text-indigo-100/70">
+                Aider un utilisateur à mieux comprendre sa situation ou sa
+                demande.
               </p>
-
-              <div className="grid grid-cols-3 gap-2">
-                <input
-                  value={birthDay}
-                  onChange={(e) =>
-                    setBirthDay(e.target.value.replace(/\D/g, "").slice(0, 2))
-                  }
-                  placeholder="JJ"
-                  required
-                  className="rounded-xl border border-white/20 bg-white/10 px-3 py-3 text-sm text-white placeholder:text-indigo-200/50 outline-none md:placeholder:text-transparent"
-                />
-                <input
-                  value={birthMonth}
-                  onChange={(e) =>
-                    setBirthMonth(e.target.value.replace(/\D/g, "").slice(0, 2))
-                  }
-                  placeholder="MM"
-                  required
-                  className="rounded-xl border border-white/20 bg-white/10 px-3 py-3 text-sm text-white placeholder:text-indigo-200/50 outline-none md:placeholder:text-transparent"
-                />
-                <input
-                  value={birthYear}
-                  onChange={(e) =>
-                    setBirthYear(e.target.value.replace(/\D/g, "").slice(0, 4))
-                  }
-                  placeholder="AA"
-                  required
-                  className="rounded-xl border border-white/20 bg-white/10 px-3 py-3 text-sm text-white placeholder:text-indigo-200/50 outline-none md:placeholder:text-transparent"
-                />
-              </div>
-
-              <div className="hidden grid-cols-3 gap-2 md:grid">
-                <p className="text-xs text-indigo-200/55">Jour</p>
-                <p className="text-xs text-indigo-200/55">Mois</p>
-                <p className="text-xs text-indigo-200/55">Année</p>
-              </div>
             </div>
 
-            <div className="space-y-2 text-left">
-              <p className="text-xs uppercase tracking-[0.18em] text-indigo-200/65">
-                Heure de naissance
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+              <h4 className="mb-2 font-semibold text-cyan-300">
+                Valoriser une expertise
+              </h4>
+              <p className="text-sm leading-relaxed text-indigo-100/70">
+                Transformer un savoir-faire en expérience interactive claire et
+                crédible.
               </p>
-
-              <div className="grid grid-cols-2 gap-2">
-                <input
-                  value={birthHour}
-                  onChange={(e) =>
-                    setBirthHour(e.target.value.replace(/\D/g, "").slice(0, 2))
-                  }
-                  placeholder="Heure"
-                  required
-                  className="rounded-xl border border-white/20 bg-white/10 px-3 py-3 text-sm text-white placeholder:text-indigo-200/50 outline-none md:placeholder:text-transparent"
-                />
-                <input
-                  value={birthMinute}
-                  onChange={(e) =>
-                    setBirthMinute(e.target.value.replace(/\D/g, "").slice(0, 2))
-                  }
-                  placeholder="Minute"
-                  required
-                  className="rounded-xl border border-white/20 bg-white/10 px-3 py-3 text-sm text-white placeholder:text-indigo-200/50 outline-none md:placeholder:text-transparent"
-                />
-              </div>
-
-              <div className="hidden grid-cols-2 gap-2 md:grid">
-                <p className="text-xs text-indigo-200/55">Heure</p>
-                <p className="text-xs text-indigo-200/55">Minute</p>
-              </div>
             </div>
 
-            <button
-              type="submit"
-              disabled={sending}
-              className="w-full rounded-full bg-gradient-to-r from-cyan-400 to-violet-500 py-3 text-sm font-semibold text-white transition hover:opacity-90 disabled:opacity-60"
-            >
-              {sending ? "Envoi en cours..." : "Recevoir mon analyse complète"}
-            </button>
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+              <h4 className="mb-2 font-semibold text-cyan-300">
+                Créer un point d’entrée
+              </h4>
+              <p className="text-sm leading-relaxed text-indigo-100/70">
+                Remplacer un formulaire classique par un parcours plus
+                engageant.
+              </p>
+            </div>
+          </div>
 
-            {message && !submitted && (
-              <p className="pt-2 text-sm text-indigo-100/80">{message}</p>
-            )}
-          </form>
+          <a
+            href="mailto:contact@systia.fr?subject=Demande%20d%E2%80%99adaptation%20%E2%80%94%20Point%20d%E2%80%99entr%C3%A9e%20interactif"
+            className="mt-8 inline-flex w-full justify-center rounded-xl bg-gradient-to-r from-cyan-400 to-violet-500 px-6 py-4 text-base font-semibold text-white transition hover:opacity-90 sm:w-auto sm:text-lg"
+          >
+            Adapter ce système à mon activité
+          </a>
+        </div>
+
+        <div className="flex justify-center">
+          <Link
+            href="/"
+            className="text-sm font-medium text-indigo-200/70 transition hover:text-white"
+          >
+            Retour à l’accueil
+          </Link>
         </div>
       </section>
     </main>
